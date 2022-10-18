@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from '../axios'
 import '../components/background/bg.css'
 import { baseUrl } from '../url';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Copyright(props) {
 
@@ -38,6 +38,8 @@ const theme = createTheme();
 export default function SignIn({ socket }) {
 
   const navigate = useNavigate()
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
 
   const handleLogin = (event) => {
 
@@ -50,14 +52,24 @@ export default function SignIn({ socket }) {
     }
 
     axios.post(`${baseUrl}/login`, loginData, { withCredentials: true }).then((response) => {
-      if (response.data.loginGranted) {
-        console.log(response.data)
-        axios.get(`${baseUrl}/auth`, { withCredentials: true }).then((response) => {
-          socket.emit('newUser', { userName: response.data.user.firstName, userId: response.data.user._id, imageUrl: response.data.user.imageUrl });
-          navigate('/chatpage')
-        })
+      if (!response.data.error) {
+        setEmailError(false)
+        setPasswordError(false)
+        if (response.data.loginGranted) {
+          console.log(response.data)
+          axios.get(`${baseUrl}/auth`, { withCredentials: true }).then((response) => {
+            socket.emit('newUser', { userName: response.data.user.firstName, userId: response.data.user._id, imageUrl: response.data.user.imageUrl });
+            navigate('/chatpage')
+          })
+        }
       } else {
-        console.log(response.data)
+        if (response.data.error === "email") {
+          setEmailError(true)
+        } else {
+          setPasswordError(true)
+          setEmailError(false)
+        }
+
       }
     })
   };
@@ -88,26 +100,56 @@ export default function SignIn({ socket }) {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            {emailError ? (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Invalid Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error
+              />
+            ) : (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+            )}
+
+            {passwordError ? (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Inavalid Passsword"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error
+              />
+            ) : (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            )}
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
