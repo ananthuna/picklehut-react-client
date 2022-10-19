@@ -16,6 +16,7 @@ import axios from '../axios'
 import '../components/background/bg.css'
 import { baseUrl } from '../url';
 import { useNavigate } from 'react-router-dom'
+import { Backdrop, CircularProgress } from '@mui/material';
 
 function Copyright(props) {
 
@@ -40,10 +41,16 @@ export default function SignIn({ socket }) {
   const navigate = useNavigate()
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
+  const [open,setOpen]=useState(false)
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleLogin = (event) => {
 
     event.preventDefault();
+    setOpen(!open);
     const data = new FormData(event.currentTarget);
 
     const loginData = {
@@ -64,8 +71,10 @@ export default function SignIn({ socket }) {
         }
       } else {
         if (response.data.error === "email") {
+          setOpen(false);
           setEmailError(true)
         } else {
+          setOpen(false);
           setPasswordError(true)
           setEmailError(false)
         }
@@ -176,6 +185,14 @@ export default function SignIn({ socket }) {
             </Grid>
           </Box>
         </Box>
+        
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
