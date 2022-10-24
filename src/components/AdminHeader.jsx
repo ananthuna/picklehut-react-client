@@ -1,15 +1,17 @@
-import { AppBar, Avatar, createTheme, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { AppBar, Avatar, createTheme, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import { Box } from '@mui/system';
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import axios from '../axios'
-import UploadAndDisplayImage from './UploadAndSelectimage'
-import { UserContext } from '../Context/Context'
+import axios from '../axios';
+import UploadAndDisplayImage from './UploadAndSelectimage';
+import { UserContext } from '../Context/Context';
 import { useContext } from 'react';
 import { baseUrl } from '../url';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import ProfilePage from '../components/ProfilePage'
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme({
     breakpoints: {
@@ -37,10 +39,13 @@ const StyledTypography = styled(Typography)({
     },
 })
 
+
+
 function Admin_header({ user, socket }) {
     const { imageURL } = useContext(UserContext)
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
+    const [profile, setProfile] = useState(false)
     const { image, setImage } = useContext(UserContext)
     const Logout = () => {
         setOpen(false)
@@ -50,6 +55,19 @@ function Admin_header({ user, socket }) {
             }
         })
     }
+
+    const handelprofile = () => {
+        setOpen(false)
+        setProfile(true)
+    }
+
+    const handleClose = () => {
+        setProfile(false)
+    }
+
+
+
+
 
     return (
         <AppBar position="sticky">
@@ -73,11 +91,13 @@ function Admin_header({ user, socket }) {
                     <Avatar onClick={e => {
                         setOpen(false)
                         setImage(true)
-                    }} alt="img" src={baseUrl + imageURL} />
+                    }} alt="img" src={baseUrl + '/' + imageURL} />
                     <IconButton onClick={e => setOpen(true)}>
                         <MoreVertIcon />
                     </IconButton>
                 </Box>
+
+                {/* main menu */}
                 <Menu
                     sx={{
                         mt: '45px',
@@ -102,19 +122,15 @@ function Admin_header({ user, socket }) {
                     open={open}
                     onClose={e => setOpen(false)}
                 >
-                    <MenuItem>
+                    <MenuItem onClick={handelprofile}>
                         <Typography textAlign="center">Profile</Typography>
-                    </MenuItem>
-                    <MenuItem>
-                        <Typography textAlign="center">Account</Typography>
-                    </MenuItem>
-                    <MenuItem>
-                        <Typography textAlign="center">Dashboard</Typography>
                     </MenuItem>
                     <MenuItem onClick={Logout}>
                         <Typography textAlign="center">Logout</Typography>
                     </MenuItem>
                 </Menu>
+
+                {/* profile image upload menu */}
                 <Menu
                     sx={{
                         mt: '45px',
@@ -143,6 +159,38 @@ function Admin_header({ user, socket }) {
                         <UploadAndDisplayImage />
                     </MenuItem>
                 </Menu>
+
+
+                {/* profile page using menu */}
+                <Menu
+                    sx={{
+                        mt: '45px',
+                        [theme.breakpoints.up('sm')]: {
+                            ml: "-60%"
+                        },
+
+                        [theme.breakpoints.down('sm')]: {
+                            ml: "none"
+                        },
+                    }}
+                    id="menu-appbar"
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={profile}
+                    onClose={e => setProfile(false)}
+                >
+                    <CloseIcon sx={{ ml: '90%', mt: '1rem', color: "primary" }} onClick={handleClose}></CloseIcon>
+                    <ProfilePage user={user}/>
+
+                </Menu>
+
             </StyledToolbar>
         </AppBar>
     )

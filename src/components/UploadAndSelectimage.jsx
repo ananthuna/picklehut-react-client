@@ -3,22 +3,26 @@ import Button from '@mui/material/Button';
 import { UserContext } from '../Context/Context'
 import axios from '../axios'
 import { Box, Typography } from "@mui/material";
-import {baseUrl} from '../url'
+import { baseUrl } from '../url';
 
 const UploadAndDisplayImage = () => {
   const [images, setImages] = useState();
   const { setImage } = useContext(UserContext);
+  const { setProfilePhoto } = useContext(UserContext);
 
   const upload = (event) => {
     setImages(event.target.files[0]);
     const data = new FormData();
     data.append('file', event.target.files[0]);
-    axios.post(`${baseUrl}/imageUpdate`, data, { withCredentials: true })
+    axios.post(`${baseUrl}/imageUpdate`, data, { withCredentials: true }).then((doc) => {
+    
+    })
   }
 
   const uploadFile = () => {
     console.log('img uploaded')
     setImage(false)
+    setProfilePhoto(false)
   }
 
   return (

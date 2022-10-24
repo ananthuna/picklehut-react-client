@@ -8,7 +8,7 @@ import ChatFooter from '../components/ChatFooter'
 import axios from '../axios'
 import { UserContext } from '../Context/Context'
 import { ChatIDContext } from '../Context/ChatIDContext';
-import {baseUrl} from '../url'
+import {baseUrl} from '../url' 
 
 
 function Chatpage({ socket }) {

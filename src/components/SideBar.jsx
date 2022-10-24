@@ -83,7 +83,7 @@ function SideBar({ socket, useradmin, message }) {
                                         variant="dot"
 
                                     >
-                                        <Avatar alt="Remy Sharp" src={baseUrl + user.imageUrl} />
+                                        <Avatar alt="Remy Sharp" src={baseUrl +'/'+ user.imageUrl} />
                                     </StyledBadge>
                                     <Box ml={2} >
                                         <Typography color="black">{user.userName}</Typography>
