@@ -16,10 +16,10 @@ function Chatpage({ socket }) {
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState()
   const [user, setUser] = useState(null)
-  const [userId, setUserId] = useState(null)
   const [typingStatus, setTypingStatus] = useState('')
   const lastMessageRef = useRef(null);
   const { chatID } = useContext(ChatIDContext)
+  const {userId,setUserId} =useContext(UserContext)
 
   useEffect(() => {
 

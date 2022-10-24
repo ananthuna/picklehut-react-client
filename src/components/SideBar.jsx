@@ -8,6 +8,7 @@ import { ChatContext } from '../Context/ChatContext';
 import { ChatIDContext } from '../Context/ChatIDContext';
 import axios from '../axios'
 import { baseUrl } from '../url';
+import { UserContext } from '../Context/Context';
 
 const StyledBox = styled(Box)({
     display: "flex",
@@ -50,11 +51,12 @@ function SideBar({ socket, useradmin, message }) {
     const [users, setUsers] = useState([]);
     const { setChat, chat } = useContext(ChatContext)
     const { setChatID, setChatURL } = useContext(ChatIDContext)
+    const {userId} =useContext(UserContext)
 
     useEffect(() => {
         axios.get(`${baseUrl}/activeUsers`, { withCredentials: true }).then((response) => {
             setUsers(response.data)
-        }, [])
+        }, [useradmin])
 
     });
 
@@ -65,7 +67,7 @@ function SideBar({ socket, useradmin, message }) {
                 <Box sx={{ overflowY: "scroll", overflow: 'hidden', mt: -1 }}>
                     <Box m={2} bgcolor="#dadff2">
                         <Typography variant="h8" fontWeight="100" mt={4}>Online Friends</Typography>
-                        {users.map((user) => user.userName !== useradmin && (
+                        {users.map((user) => user.userId !== userId && (
                             <Box pr={4} mt={2} >
                                 <StyledBox onClick={() => {
                                     setChat(user.userName)

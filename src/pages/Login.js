@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +17,7 @@ import '../components/background/bg.css'
 import { baseUrl } from '../url';
 import { useNavigate } from 'react-router-dom'
 import { Backdrop, CircularProgress } from '@mui/material';
+import { UserContext } from '../Context/Context';
 
 function Copyright(props) {
 
@@ -42,6 +43,7 @@ export default function SignIn({ socket }) {
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
   const [open,setOpen]=useState(false)
+  const {setUserId} =useContext(UserContext)
 
   const handleClose = () => {
     setOpen(false);
@@ -65,6 +67,7 @@ export default function SignIn({ socket }) {
         if (response.data.loginGranted) {
           console.log(response.data)
           axios.get(`${baseUrl}/auth`, { withCredentials: true }).then((response) => {
+            setUserId(response.data.user._id)
             socket.emit('newUser', { userName: response.data.user.firstName, userId: response.data.user._id, imageUrl: response.data.user.imageUrl });
             navigate('/chatpage')
           })
