@@ -49,7 +49,7 @@ function ChatBody({ messages, user, lastMessageRef, typingStatus }) {
                 </Box>
               )}
             </Box>
-            <Box sx={{ position: "fixed", bottom: "10%", left: '5%' }}>
+            <Box sx={{ position: "fixed", bottom: "10%", left:{ xs: "5%", sm: "41%" } }}>
               <Typography>{typingStatus && chatID && `${typingStatus} is typing...`}</Typography>
             </Box>
           </Box>
