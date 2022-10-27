@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,11 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from '../axios'
-import '../components/background/bg.css'
 import { baseUrl } from '../url';
 import { useNavigate } from 'react-router-dom'
 import { Backdrop, CircularProgress } from '@mui/material';
-import { UserContext } from '../Context/Context';
 
 function Copyright(props) {
 
@@ -42,46 +40,32 @@ export default function SignIn({ socket }) {
   const navigate = useNavigate()
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
-  const [open,setOpen]=useState(false)
-  const {setUserId} =useContext(UserContext)
+  const [open, setOpen] = useState(false)
 
   const handleClose = () => {
     setOpen(false);
   };
-
+  let token
   const handleLogin = (event) => {
 
     event.preventDefault();
     setOpen(!open);
     const data = new FormData(event.currentTarget);
-
+    token=localStorage.getItem("token")
+    console.log(token);
     const loginData = {
       email: data.get('email'),
       password: data.get('password'),
+      token:token
     }
 
-    axios.post(`${baseUrl}/login`, loginData, { withCredentials: true }).then((response) => {
-      if (!response.data.error) {
-        setEmailError(false)
-        setPasswordError(false)
-        if (response.data.loginGranted) {
-          console.log(response.data)
-          axios.get(`${baseUrl}/auth`, { withCredentials: true }).then((response) => {
-            setUserId(response.data.user._id)
-            socket.emit('newUser', { userName: response.data.user.firstName, userId: response.data.user._id, imageUrl: response.data.user.imageUrl });
-            navigate('/chatpage')
-          })
-        }
+    axios.post(`${baseUrl}/api/user/users/login`, loginData, { withCredentials: true }).then((response) => {
+      if (response.data.error) {
+        setEmailError(true)
+        setPasswordError(true)
       } else {
-        if (response.data.error === "email") {
-          setOpen(false);
-          setEmailError(true)
-        } else {
-          setOpen(false);
-          setPasswordError(true)
-          setEmailError(false)
-        }
-
+        localStorage.setItem("token", response.data.token);
+        navigate('/home')
       }
     })
   };
@@ -188,14 +172,14 @@ export default function SignIn({ socket }) {
             </Grid>
           </Box>
         </Box>
-        
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

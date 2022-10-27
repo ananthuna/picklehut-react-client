@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tooltip } from 'reactstrap';
 import { useState } from 'react';
 import { baseUrl } from '../url'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Backdrop, CircularProgress } from '@mui/material';
 
 function Copyright(props) {
@@ -40,7 +40,7 @@ export default function SignUp() {
 
   const [email, setEmail] = useState()
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const [open,setOpen]=useState(false)
+  const [open, setOpen] = useState(false)
   const toggle = () => setTooltipOpen(!tooltipOpen);
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onBlur" });
   const navigate = useNavigate()
@@ -51,9 +51,12 @@ export default function SignUp() {
 
   const handleSignup = (data) => {
     setOpen(!open);
-    axios.post(`${baseUrl}/signup`, data, { withCredentials: true }).then((response) => {
-      if (response.data.userCreated) {
-        navigate('/')
+    console.log(data)
+    axios.post(`${baseUrl}/api/user/users`, data, { withCredentials: true }).then((response) => {
+     
+      if (response.data) {
+        localStorage.setItem("token", response.data.token);
+        navigate('/home')
       } else {
         setEmail(true)
       }
@@ -216,12 +219,12 @@ export default function SignUp() {
           </Tooltip>
         </Box>
         <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
