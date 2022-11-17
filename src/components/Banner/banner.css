@@ -1,11 +1,9 @@
 .banner {
     position: relative;
     top: 90px;
-    background-color: blue;
-
-}
-.img{
-    background-color: red;
-    height: 400px;
 }
 
+.img-text {
+    color:white;
+    padding: 4rem;
+}
