@@ -1,0 +1,11 @@
+.banner {
+    position: relative;
+    top: 90px;
+    background-color: blue;
+
+}
+.img{
+    background-color: red;
+    height: 400px;
+}
+

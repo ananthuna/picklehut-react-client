@@ -1,14 +1,15 @@
-import { Box } from '@mui/system'
 import React from 'react'
-import Header from '../components/header'
+import Header from '../components/Header/header'
+import Banner from '../components/Banner/banner'
 
 function Home() {
 
-    
+
   return (
-   <Box>
-    <Header></Header>
-   </Box>
+    <div>
+      <Header />
+      <Banner/>
+    </div>
   )
 }
 
