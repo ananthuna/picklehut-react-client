@@ -16,7 +16,7 @@ function banner() {
             <Slider
                 autoplay={2000}
             >
-                {slides.map((slide, index) => <div style={{ backgroundImage: `url(${slide.url})` }} key={index} >
+                {slides.map((slide, index) => <div className='img-background' style={{ backgroundImage: `url(${slide.url})` }} key={index} >
                     <div className='img-text'>
                         <h2>{slide.title}</h2>
                         <div>{slide.description}</div>

@@ -2,6 +2,10 @@
     position: relative;
     top: 90px;
 }
+.img-background{
+    position: absolute;
+    width: 100%;
+}
 
 .img-text {
     color:white;

@@ -2,22 +2,29 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-    padding-left: 4rem;
-    padding-right: 4rem;
+    margin-left: -3.8rem;
     margin-top: 7rem;
-    gap: 3rem;
+    gap: 2rem;
     justify-items: center;
     align-items: center;
 }
 
 .card {
     display: flex;
-    padding-left: 2rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    padding-left: 1rem;
     height: 10rem;
     justify-content:center;
     background-color: rgb(250, 250, 246);
+    background-size: 100%;
+    -webkit-transition: all 0.9s ease-in-out;
     width: 100%;
     box-shadow: 0px 0px 15px 0.1px rgba(161, 160, 160, 0.938);
+}
+
+.card:hover{
+    background-size: 120%;
 }
 
 .card h6{
@@ -25,16 +32,5 @@
     font-style: italic;
 }
 
-.img{
-    position: relative;
-    margin-left: -2rem;
-    width: 36.6rem;
-    height: 10rem;
-    z-index: 1000;
-}
-.discription{
-    position: absolute;
-    z-index: 10000;
-}
 
 
