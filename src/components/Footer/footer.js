@@ -4,6 +4,7 @@ import Link from '@mui/material/Link';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import './footer.css'
 
 function Copyright(props) {
 
@@ -48,9 +49,9 @@ function footer() {
                         display: 'flex',
                         gap: 2
                     }}>
-                        <InstagramIcon />
-                        <FacebookIcon />
-                        <TwitterIcon />
+                        <InstagramIcon className='icon'/>
+                        <FacebookIcon className='icon'/>
+                        <TwitterIcon className='icon'/>
                     </Box>
                 </Box>
             </Box>

@@ -1,6 +1,8 @@
 .banner {
     position: relative;
     top: 90px;
+    z-index: 1;
+    width: 100%;
 }
 .img-background{
     position: absolute;

@@ -13,7 +13,7 @@ function features() {
     
 
     return (
-        <Box sx={{ml:{xs:'0rem',sm:'3rem',md:'4rem'}}}>
+        <Box sx={{pl:'5rem',pr:'1.5rem',position:'relative',width:'100%'}}>
             <div className='main'>
                 {cards.map((card) =>
                     <div className='card' style={{ backgroundImage: `url(${card.url})` }}>

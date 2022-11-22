@@ -78,7 +78,7 @@ export default function BasicTabs() {
           <Tab label="VEG" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0} >
+      <TabPanel value={value} index={0}>
         <Products products={products}/>
       </TabPanel>
       <TabPanel value={value} index={1}>

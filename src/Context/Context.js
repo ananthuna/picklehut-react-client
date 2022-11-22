@@ -4,15 +4,11 @@ import React from 'react'
 export const UserContext = createContext(null)
 
 export default function Context({ children }) {
-    const [user, setUser] = useState(null)
-    const [image, setImage] = useState(null)
-    const [imageURL, setImageURL] = useState(null);
-    const [nameEdit, setNameEdit] = useState(false)
-    const [profilePhoto, setProfilePhoto] = useState(false)
-    const [userId,setUserId]=useState('')
+    const [details, setDetails] = useState(null)
+
 
     return (
-        <UserContext.Provider value={{userId,setUserId, profilePhoto,setProfilePhoto,user, setUser, image, setImage, imageURL, setImageURL ,nameEdit,setNameEdit}}>
+        <UserContext.Provider value={{ details, setDetails }}>
             {children}
         </UserContext.Provider>
     )
