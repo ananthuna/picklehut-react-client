@@ -21,7 +21,7 @@ export default function PrimarySearchAppBar() {
 
 
     return (
-        <div className='header'>
+        <Box className='header' sx={{borderBottom: 1}}>
             <Box sx={{
                 position: 'relative',
                 width: '12rem',
@@ -78,7 +78,7 @@ export default function PrimarySearchAppBar() {
                     <Account />
                 </IconButton>
             </Box>
-        </div>
+        </Box>
     );
 }
 

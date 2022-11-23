@@ -3,22 +3,27 @@ import React, { useContext, useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import { UserContext } from '../../Context/Context'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from 'react-router-dom'
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 
 
 
 function view() {
-
+    const navigate = useNavigate()
     const { details } = useContext(UserContext)
     const [product, setProduct] = useState({})
 
     useEffect(() => {
-        if (details) window.localStorage.setItem("myObject", JSON.stringify(details));
+        if (details) localStorage.setItem("myObject", JSON.stringify(details));
 
-        let item = window.localStorage.getItem("myObject");
+        let item = localStorage.getItem("myObject");
         setProduct(JSON.parse(item))
     }, [])
+
+    const handleCart = () => {
+        navigate('/cart')
+    }
 
 
     return (
@@ -28,8 +33,9 @@ function view() {
             height: '30rem',
             display: 'flex',
             top: '6rem',
-            mb: '1rem'
+            mb: '1rem',
         }}>
+           
 
             <Box sx={{
                 width: '50%',
@@ -39,6 +45,7 @@ function view() {
                 justifyContent: 'center'
 
             }}>
+                
                 <Paper elevation={2} sx={{
                     width: '35rem',
                     height: '20rem',
@@ -59,27 +66,27 @@ function view() {
                     pt: '1rem',
                     pl: '2rem'
                 }}>
-                    <Typography sx={{fontSize: '1.5rem',fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}}>{product.name}</Typography>
+                    <Typography sx={{ fontSize: '1.5rem', fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif' }}>{product.name}</Typography>
                     <Typography>{product.discription}</Typography>
                     <Box sx={{
-                        display: 'flex',        
+                        display: 'flex',
                         gap: 1
                     }}>
-                        <Typography sx={{fontSize: '1.5rem'}} ><b>{'₹'+product.offrate}</b></Typography>
+                        <Typography sx={{ fontSize: '1.5rem' }} ><b>{'₹' + product.offrate}</b></Typography>
                         <Typography color='lightgrey'><s>{product.rate}</s></Typography>
                         <Typography color='green'>{product.off + '% OFF'}</Typography>
                     </Box>
                     <Typography>{product.weight}</Typography>
                 </Box>
                 <Box sx={{
-                    display:'flex',
-                    gap:4,
-                    width:'100%',
-                    pt:'3rem',
-                    pl:'2rem'
+                    display: 'flex',
+                    gap: 4,
+                    width: '100%',
+                    pt: '3rem',
+                    pl: '2rem'
                 }}>
-                <Button variant="contained" sx={{bgcolor:'#ef6c00',"&:hover": {backgroundColor: "#ef6c00", }}} startIcon={<ShoppingCartIcon />}>ADD TO CART</Button>
-                <Button variant="contained" sx={{bgcolor:'#ff3d00',"&:hover": {backgroundColor: "#ff3d00", }}} startIcon={<LocalMallIcon />}>BUY NOW</Button>
+                    <Button onClick={handleCart} variant="contained" sx={{ bgcolor: '#ef6c00', "&:hover": { backgroundColor: "#ef6c00", } }} startIcon={<ShoppingCartIcon />}>ADD TO CART</Button>
+                    <Button variant="contained" sx={{ bgcolor: '#ff3d00', "&:hover": { backgroundColor: "#ff3d00", } }} startIcon={<LocalMallIcon />}>BUY NOW</Button>
                 </Box>
             </Box>
 

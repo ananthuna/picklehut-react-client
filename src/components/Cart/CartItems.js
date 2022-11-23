@@ -3,21 +3,24 @@ import React from 'react'
 import List from './List/List'
 import Address from './Address/Address'
 import TotalPrice from './TotalPrice/TotalPrice'
+import PlaceOrder from './PlaceOrder/PlaceOrder'
 
 function CartItems() {
     return (
         <Box sx={{
             display: 'flex',
+            bgcolor:'#F8F8F8'
         }}>
             <Box sx={{
-                mt:'5.6rem',
-                width: '60%',
+                mt: '5.6rem',
+                width: '60%'
             }}>
-                <Address />
+                <Address/>
                 <List />
+                <PlaceOrder/>
             </Box>
             <Box sx={{
-                width:'40%'
+                width: '40%'
             }}>
                 <TotalPrice />
             </Box>
