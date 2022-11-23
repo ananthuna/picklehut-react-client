@@ -15,8 +15,8 @@ function features() {
     return (
         <Box sx={{pl:'5rem',pr:'1.5rem',position:'relative',width:'100%'}}>
             <div className='main'>
-                {cards.map((card) =>
-                    <div className='card' style={{ backgroundImage: `url(${card.url})` }}>
+                {cards.map((card,index) =>
+                    <div className='card' key={index} style={{ backgroundImage: `url(${card.url})` }}>
                         <div className='discription'>
                             <h6>Product Organic</h6>
                             <h4>Natural Bottled Pickle</h4>

@@ -1,0 +1,9 @@
+.like_btn{
+    position: absolute;
+    top:1rem;
+    left:10rem;
+    z-index: 100;
+}
+/* .box{
+    z-index: 1;
+} */

@@ -43,8 +43,8 @@ function footer() {
                     <Copyright />
                 </Box>
                 <Box>
-                    <Typography>The Journey To Pickle Hut</Typography>
-                    <Typography>You can find taste home made pickle herewith us</Typography>
+                    <Typography component={'span'}>The Journey To Pickle Hut</Typography>
+                    <Typography component={'span'}>You can find taste home made pickle herewith us</Typography>
                     <Box sx={{
                         display: 'flex',
                         gap: 2

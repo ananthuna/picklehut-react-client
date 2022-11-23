@@ -1,6 +1,11 @@
 import { Box, Paper, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
+import Button from '@mui/material/Button';
 import { UserContext } from '../../Context/Context'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+
+
 
 
 function view() {
@@ -51,11 +56,30 @@ function view() {
             }}>
                 <Typography sx={{ pl: '8rem' }}>Product Details</Typography>
                 <Box sx={{
-                    pt:'1rem',
+                    pt: '1rem',
+                    pl: '2rem'
+                }}>
+                    <Typography sx={{fontSize: '1.5rem',fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'}}>{product.name}</Typography>
+                    <Typography>{product.discription}</Typography>
+                    <Box sx={{
+                        display: 'flex',        
+                        gap: 1
+                    }}>
+                        <Typography sx={{fontSize: '1.5rem'}} ><b>{'₹'+product.offrate}</b></Typography>
+                        <Typography color='lightgrey'><s>{product.rate}</s></Typography>
+                        <Typography color='green'>{product.off + '% OFF'}</Typography>
+                    </Box>
+                    <Typography>{product.weight}</Typography>
+                </Box>
+                <Box sx={{
+                    display:'flex',
+                    gap:4,
+                    width:'100%',
+                    pt:'3rem',
                     pl:'2rem'
                 }}>
-                    <Typography>{product.name}</Typography>
-                    
+                <Button variant="contained" sx={{bgcolor:'#ef6c00',"&:hover": {backgroundColor: "#ef6c00", }}} startIcon={<ShoppingCartIcon />}>ADD TO CART</Button>
+                <Button variant="contained" sx={{bgcolor:'#ff3d00',"&:hover": {backgroundColor: "#ff3d00", }}} startIcon={<LocalMallIcon />}>BUY NOW</Button>
                 </Box>
             </Box>
 

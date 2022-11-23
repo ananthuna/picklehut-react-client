@@ -2,9 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Products from '../products/products'
+import Products from '../products/Products'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,7 +18,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -42,16 +41,7 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
 
-  const products = [
-    { name: 'kera pickle', discription: 'sea fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kakka pickle', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'pallathy', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'vayamp', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kera pickle', discription: 'sea fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kakka pickle', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'pallathy', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'vayamp', discription: 'fresh water fish',url:'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-  ]
+ 
 
   
 
@@ -78,11 +68,11 @@ export default function BasicTabs() {
           <Tab label="VEG" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <Products products={products}/>
+      <TabPanel value={value}  index={0}>
+        <Products tab={'nonveg'}></Products>
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Products products={products}/>
+      <TabPanel component={'div'} value={value}  index={1}>
+        <Products tab={'veg'}/>
       </TabPanel>
     </Box>
   );
