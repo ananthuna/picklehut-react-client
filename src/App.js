@@ -5,7 +5,8 @@ import Signup from './pages/Sigup'
 import Home from './pages/Home'
 import View from './pages/View'
 import Cart from './pages/Cart'
-import Order from './pages/Order';
+import Order from './pages/Order'
+import Account from './pages/Account';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path='/view' element={<View/>}></Route>
           <Route path='/cart' element={<Cart/>}></Route>
           <Route path='/order' element={<Order/>}></Route>
+          <Route path='/account' element={<Account/>}></Route>
         </Routes>
       </BrowserRouter>
     

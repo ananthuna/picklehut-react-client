@@ -1,15 +1,20 @@
+import { Box } from '@mui/system'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import './cartIcon.css'
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import { Badge, IconButton } from '@mui/material';
 
 function cartIcon() {
     const navigate = useNavigate()
-    
+
     return (
-        <div onClick={()=>navigate('/cart')}>
-            <img className='cart' alt='cart' src={process.env.PUBLIC_URL + '/shopingcart.svg'} ></img>
-            <span className='badge badge-warning' id='lblCartCount'> 5 </span>
-        </div>
+        <Box>
+            <IconButton onClick={()=>navigate('/cart')}>
+                <Badge badgeContent={1} color='success'>
+                    <LocalMallOutlinedIcon sx={{fontSize: 30}} color="action" />
+                </Badge>
+            </IconButton>
+        </Box>
     )
 }
 

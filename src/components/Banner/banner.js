@@ -13,7 +13,7 @@ function banner() {
 
     return (
         <div className='banner'>
-            <Slider
+            <Slider className='slider '
                 autoplay={2000}
             >
                 {slides.map((slide, index) => <div className='img-background' style={{ backgroundImage: `url(${slide.url})` }} key={index} >

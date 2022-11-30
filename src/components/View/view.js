@@ -24,6 +24,9 @@ function view() {
     const handleCart = () => {
         navigate('/cart')
     }
+    const handleOrder = () => {
+        navigate('/order')
+    }
 
 
     return (
@@ -35,7 +38,7 @@ function view() {
             top: '6rem',
             mb: '1rem',
         }}>
-           
+
 
             <Box sx={{
                 width: '50%',
@@ -45,7 +48,7 @@ function view() {
                 justifyContent: 'center'
 
             }}>
-                
+
                 <Paper elevation={2} sx={{
                     width: '35rem',
                     height: '20rem',
@@ -86,7 +89,7 @@ function view() {
                     pl: '2rem'
                 }}>
                     <Button onClick={handleCart} variant="contained" sx={{ bgcolor: '#ef6c00', "&:hover": { backgroundColor: "#ef6c00", } }} startIcon={<ShoppingCartIcon />}>ADD TO CART</Button>
-                    <Button variant="contained" sx={{ bgcolor: '#ff3d00', "&:hover": { backgroundColor: "#ff3d00", } }} startIcon={<LocalMallIcon />}>BUY NOW</Button>
+                    <Button onClick={handleOrder} variant="contained" sx={{ bgcolor: '#ff3d00', "&:hover": { backgroundColor: "#ff3d00", } }} startIcon={<LocalMallIcon />}>BUY NOW</Button>
                 </Box>
             </Box>
 
