@@ -6,14 +6,20 @@ import SearchBar from './SearchBar/SearchBar'
 import './header.css';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PrimarySearchAppBar() {
-    
-
+    const [user, setUser] = React.useState({})
+    const navigate = useNavigate()
+    React.useEffect(() => {
+        let User = localStorage.getItem("user");
+        setUser(User)
+    }, [])
 
     return (
-        <Box className='header' sx={{borderBottom: 1}}>
+        <Box className='header' sx={{ borderBottom: 1 }}>
             <Box sx={{
                 position: 'relative',
                 width: '12rem',
@@ -23,15 +29,29 @@ export default function PrimarySearchAppBar() {
                 <Logo />
             </Box>
             <Box>
-                <SearchBar/>
+                <SearchBar />
             </Box>
-            <Box className='right-items'>
-                <IconButton>
-                    <Cart />
-                </IconButton>
-                <IconButton>
-                    <Account />
-                </IconButton>
+            <Box >
+                {user ? (
+                    <Box className='right-items'>
+                        <IconButton>
+                            <Cart />
+                        </IconButton>
+                        <IconButton>
+                            <Account />
+                        </IconButton>
+                    </Box>
+
+                ) : (
+                    <Box className='right-items'>
+                        <Typography className='selection' onClick={() => navigate('/login')}>Login</Typography>
+                        <Typography>/</Typography>
+                        <Typography className='selection' onClick={() => navigate('/signup')}>Signup</Typography>
+                    </Box>
+                )}
+
+
+
             </Box>
         </Box>
     );

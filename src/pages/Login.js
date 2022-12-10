@@ -48,24 +48,39 @@ export default function SignIn({ socket }) {
   let token
   const handleLogin = (event) => {
 
-    event.preventDefault();
-    setOpen(!open);
-    const data = new FormData(event.currentTarget);
-    token=localStorage.getItem("token")
-    console.log(token);
+    event.preventDefault()
+    setOpen(!open)
+    const data = new FormData(event.currentTarget)
+    token = localStorage.getItem("user.token")
     const loginData = {
       email: data.get('email'),
       password: data.get('password'),
-      token:token
+      token: JSON.parse(token)
     }
+    const Data = JSON.stringify(loginData);
+    const customConfig = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-    axios.post(`${baseUrl}/api/user/users/login`, loginData, { withCredentials: true }).then((response) => {
-      if (response.data.error) {
-        setEmailError(true)
-        setPasswordError(true)
+    axios.post(`${baseUrl}/api/user/login`, Data, customConfig).then((response) => {
+      if (response.data.err) {
+        switch (response.data.err) {
+          case "No account":
+            setEmailError(true)
+            break;
+          case "invalid password":
+            setPasswordError(true)
+            break;
+          default:
+            setEmailError(true)
+            setPasswordError(true)
+            break;
+        }
       } else {
-        localStorage.setItem("token", response.data.token);
-        navigate('/home')
+        localStorage.setItem("user", JSON.stringify(response.data));
+        navigate('/')
       }
     })
   };

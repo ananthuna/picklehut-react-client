@@ -65,6 +65,11 @@ function accountIcon() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        handleClose()
+        window.location.reload()
+    }
     return (
         <Box>
             <Box>
@@ -106,7 +111,7 @@ function accountIcon() {
                     <LocalShippingIcon />
                     Orders
                 </MenuItem>
-                <MenuItem onClick={()=>{
+                <MenuItem onClick={() => {
                     navigate('/account')
                     setValue(3)
                     handleClose()
@@ -114,7 +119,7 @@ function accountIcon() {
                     <FavoriteIcon />
                     WishList
                 </MenuItem>
-                <MenuItem onClick={()=>{
+                <MenuItem onClick={() => {
                     navigate('/account')
                     setValue(4)
                     handleClose()
@@ -122,11 +127,7 @@ function accountIcon() {
                     <ConfirmationNumberIcon />
                     Coupons
                 </MenuItem>
-                <MenuItem onClick={()=>{
-                    navigate('/account')
-                    setValue(5)
-                    handleClose()
-                }} disableRipple>
+                <MenuItem onClick={handleLogout} disableRipple>
                     <PowerSettingsNewIcon />
                     Logout
                 </MenuItem>

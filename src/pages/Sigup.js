@@ -51,19 +51,28 @@ export default function SignUp() {
 
   const handleSignup = (data) => {
     setOpen(!open);
-    console.log(data)
-    axios.post(`${baseUrl}/api/user/users`, data, { withCredentials: true }).then((response) => {
-     
-      if (response.data) {
-        localStorage.setItem("token", response.data.token);
-        navigate('/home')
-      } else {
-        setEmail(true)
+    const Data = JSON.stringify(data);
+    const customConfig = {
+      headers: {
+        'Content-Type': 'application/json'
       }
-    })
+    };
+    axios.post(`${baseUrl}/api/user/signup`, Data, customConfig)
+      .then((response) => {
+
+        console.log(response.data);
+        if (response.data) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          navigate('/')
+        }
+        if (response.data === "already used email") {
+          setEmail(true)
+        }
+
+      })
   };
   const handleLogin = () => {
-    navigate('/')
+    navigate('/login')
   }
 
   return (

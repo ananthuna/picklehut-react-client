@@ -21,3 +21,7 @@
     width: 4rem;
     height: 4rem;
 }
+
+.selection:hover {
+    color: blue;
+}
