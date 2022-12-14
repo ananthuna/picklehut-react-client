@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Adminicon from './adminicon/AdminIcon';
 
 
 export default function PrimarySearchAppBar() {
@@ -15,8 +16,11 @@ export default function PrimarySearchAppBar() {
     const navigate = useNavigate()
     React.useEffect(() => {
         let User = localStorage.getItem("user");
-        setUser(User)
+        setUser(JSON.parse(User))
+        console.log(JSON.parse(User));
     }, [])
+
+
 
     return (
         <Box className='header' sx={{ borderBottom: 1 }}>
@@ -34,12 +38,22 @@ export default function PrimarySearchAppBar() {
             <Box >
                 {user ? (
                     <Box className='right-items'>
-                        <IconButton>
-                            <Cart />
-                        </IconButton>
-                        <IconButton>
-                            <Account />
-                        </IconButton>
+                        {user.isAdmin ? (
+                            <Box>
+                                <IconButton>
+                                    <Adminicon />
+                                </IconButton>
+                            </Box>
+                        ) : (
+                            <Box>
+                                <IconButton>
+                                    <Cart />
+                                </IconButton>
+                                <IconButton>
+                                    <Account />
+                                </IconButton>
+                            </Box>
+                        )}
                     </Box>
 
                 ) : (
@@ -48,12 +62,13 @@ export default function PrimarySearchAppBar() {
                         <Typography>/</Typography>
                         <Typography className='selection' onClick={() => navigate('/signup')}>Signup</Typography>
                     </Box>
-                )}
+                )
+                }
 
 
 
-            </Box>
-        </Box>
+            </Box >
+        </Box >
     );
 }
 

@@ -97,12 +97,12 @@ function accountIcon() {
                 onClose={handleClose}
             >
                 <MenuItem onClick={() => {
-                    navigate('/account')
+                    navigate('/admin')
                     setValue(0)
                     handleClose()
                 }} disableRipple>
                     <PersonIcon />
-                    My account
+                    Products
                 </MenuItem>
                 <MenuItem onClick={() => {
                     navigate('/account')
@@ -118,7 +118,7 @@ function accountIcon() {
                     handleClose()
                 }} disableRipple>
                     <FavoriteIcon />
-                    WishList
+                    Coupons
                 </MenuItem>
                 <MenuItem onClick={() => {
                     navigate('/account')
@@ -126,7 +126,7 @@ function accountIcon() {
                     handleClose()
                 }} disableRipple>
                     <ConfirmationNumberIcon />
-                    Coupons
+                    Settings
                 </MenuItem>
                 <MenuItem onClick={handleLogout} disableRipple>
                     <PowerSettingsNewIcon />

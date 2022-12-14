@@ -1,16 +1,17 @@
 import React from 'react'
 import Header from '../components/Header/header'
 import Footer from '../components/Footer/footer'
-import Addmin from '../components/Addmin/Addminpage'
+import Adminpage from '../components/Adminpage/Adminpage'
+import { Box } from '@mui/material'
 
-function Addmin() {
+function Admin() {
     return (
         <Box>
             <Header />
-            <Addmin />
+            <Adminpage />
             <Footer />
         </Box>
     )
 }
 
-export default Addmin
+export default Admin

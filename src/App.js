@@ -7,6 +7,7 @@ import View from './pages/View'
 import Cart from './pages/Cart'
 import Order from './pages/Order'
 import Account from './pages/Account';
+import Admin from './pages/Admin'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/cart' element={<Cart />}></Route>
         <Route path='/order' element={<Order />}></Route>
         <Route path='/account' element={<Account />}></Route>
+        <Route path='/admin' element={<Admin />}></Route>
       </Routes>
     </BrowserRouter>
 

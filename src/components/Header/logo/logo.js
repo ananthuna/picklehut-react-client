@@ -5,7 +5,7 @@ import './logo.css'
 function logo() {
     const navigate = useNavigate()
     return (
-        <div onClick={()=>navigate('/home')} className='logo-align'>
+        <div onClick={()=>navigate('/')} className='logo-align'>
             <img className='logo' src={process.env.PUBLIC_URL + '/logo_header.png'} alt='logo'></img>
         </div>
     )
