@@ -18,6 +18,8 @@ import { Button } from '@mui/material';
 function Row({ row }) {
     const [open, setOpen] = React.useState(false);
 
+
+
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -84,7 +86,7 @@ function Row({ row }) {
 export default function CollapsibleTable() {
     const [rows, setRows] = React.useState([
         {
-            Name: 'pickle', Catogary: 'veg', Quantity: 1, Price: 180, Offer: 20,Weight:100, history: [
+            name: 'pickle', catogary: 'veg', quantity: 1, price: 180, offer: 20,weight:100, history: [
                 {
                     date: '2020-01-05',
                     customerId: '11091700',

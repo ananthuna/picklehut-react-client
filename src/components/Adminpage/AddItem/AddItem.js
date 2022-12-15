@@ -26,33 +26,18 @@ const Transition = React.forwardRef(function Transition(
 
 export default function FullScreenDialog() {
     const [open, setOpen] = React.useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onBlur" });
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: "onBlur" });
     const [images, setImages] = React.useState();
 
     const upload = (event) => {
         setImages(event.target.files[0]);
-        // let user = localStorage.getItem("user")
-        // user = JSON.parse(user)
-        // const customConfig = {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //         'Authorization': `Bearer ${user.token}`
-        //     }
-        // }
-        // const file = event.target.files[0];
-        // const formData = new FormData();
-        // formData.append("file", event.target.files[0]);
-        // formData.append("item", 'haloo')
-        // axios.post(`${baseUrl}/api/item/imageUpload`, formData, customConfig).then((doc) => {
-
-        // })
     }
 
     const handleUpload = (data) => {
 
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        const Data=JSON.stringify(data)
+        const Data = JSON.stringify(data)
         const formData = new FormData()
         formData.append("file", images)
         formData.append("item", Data)
@@ -63,7 +48,11 @@ export default function FullScreenDialog() {
             }
         }
         axios.post(`${baseUrl}/api/item/addItem`, formData, customConfig)
-            .then((response) => {
+            .then((res) => {
+                alert('item added')
+                reset()
+                setImages(null)
+                console.log(res.data);
             })
     }
 
@@ -125,72 +114,72 @@ export default function FullScreenDialog() {
                             <TextField
                                 style={{ width: 400 }}
                                 label="Name"
-                                id="Name"
-                                name='Name'
+                                id="name"
+                                name='name'
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Name', { required: true })}
+                                {...register('name', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
                                 label="Discription"
-                                id="disc"
-                                name='disc'
+                                id="description"
+                                name='description'
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('disc', { required: true })}
+                                {...register('description', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
-                                label="Catogary"
-                                id="Catogary"
-                                name="Catogary"
+                                label="Category"
+                                id="category"
+                                name="category"
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Catogary', { required: true })}
+                                {...register('category', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
                                 label="Price"
-                                id="Price"
-                                name="Price"
+                                id="price"
+                                name="price"
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Price', { required: true })}
+                                {...register('price', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
                                 label="Quantity"
-                                id="Quantity"
-                                name="Quantity"
+                                id="quantity"
+                                name="quantity"
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Quantity', { required: true })}
+                                {...register('quantity', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
                                 label="Weight"
-                                id="Weight"
-                                name="Weight"
+                                id="weight"
+                                name="weight"
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Weight', { required: true })}
+                                {...register('weight', { required: true })}
                             />
                             <TextField
                                 style={{ width: 400 }}
                                 label="Offer"
-                                id="Offer"
-                                name="Offer"
+                                id="offer"
+                                name="offer"
                                 size="small"
                                 autoFocus
                                 required
-                                {...register('Offer', { required: true })}
+                                {...register('offer', { required: true })}
                             />
                         </Box>
                         <Box sx={{
@@ -214,7 +203,7 @@ export default function FullScreenDialog() {
                                     ) :
                                         (
                                             <Box>
-                                                <img alt="not fount" width={"350px"} src="https://www.jiomart.com/images/product/600x600/491238808/rambandhu-mango-pickle-350-g-product-images-o491238808-p491238808-0-202203170328.jpg" />
+                                                <img alt="not fount" width={"350px"} src={process.env.PUBLIC_URL + '/uploadImage.webp'} />
                                             </Box>
                                         )}
                                 </Box>

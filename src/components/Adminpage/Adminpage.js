@@ -87,7 +87,6 @@ export default function VerticalTabs() {
                     bottom:'5rem',
                     right:'3rem'
                 }}>
-
                 <AddItem />
                 </Box>
             </TabPanel>
