@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
+import axios from '../../../axios'
 
 
 function Row({ row }) {
@@ -33,13 +34,13 @@ function Row({ row }) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.Name}
+                    {row.name}
                 </TableCell>
-                <TableCell align="right">{row.Catogary}</TableCell>
-                <TableCell align="right">{row.Quantity}</TableCell>
-                <TableCell align="right">{row.Price}</TableCell>
-                <TableCell align="right">{row.Offer}</TableCell>
-                <TableCell align="right">{row.Weight}</TableCell>
+                <TableCell align="right">{row.category}</TableCell>
+                <TableCell align="right">{row.quantity}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">{row.offer}</TableCell>
+                <TableCell align="right">{row.weight}</TableCell>
                 <TableCell align="right"><Button>Edit</Button></TableCell>
                 <TableCell align="right"><Button>Remove</Button></TableCell>
             </TableRow>
@@ -59,7 +60,7 @@ function Row({ row }) {
                                         <TableCell align="right">Total price ($)</TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                                {/* <TableBody>
                                     {row.history.map((historyRow) => (
                                         <TableRow key={historyRow.date}>
                                             <TableCell component="th" scope="row">
@@ -72,7 +73,7 @@ function Row({ row }) {
                                             </TableCell>
                                         </TableRow>
                                     ))}
-                                </TableBody>
+                                </TableBody> */}
                             </Table>
                         </Box>
                     </Collapse>
@@ -84,17 +85,15 @@ function Row({ row }) {
 
 
 export default function CollapsibleTable() {
-    const [rows, setRows] = React.useState([
-        {
-            name: 'pickle', catogary: 'veg', quantity: 1, price: 180, offer: 20,weight:100, history: [
-                {
-                    date: '2020-01-05',
-                    customerId: '11091700',
-                    amount: 3,
-                }
-            ]
-        }
-    ])
+    const [rows, setRows] = React.useState([])
+    React.useEffect(() => {
+      axios.get('http://localhost:3001/api/item/items').then((doc)=>{
+        setRows(doc.data)
+        console.log(doc.data);
+      })
+    }, [rows])
+    
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">

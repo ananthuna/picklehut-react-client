@@ -5,20 +5,21 @@ import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Context/Context'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import './product.css'
+import {baseUrl} from '../../url'
 
-const products = [
-    { name: 'kera pickle', rate: 150, off: 25, offrate: 112.5, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kakka pickle', rate: 250, off: 25, offrate: 187.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'pallathy', rate: 180, off: 25, offrate: 135, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'vayamp', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kera pickle', rate: 200, off: 25, offrate: 150, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'kakka pickle', rate: 550, off: 25, offrate: 412.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'pallathy', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-    { name: 'vayamp', rate: 140, off: 25, offrate: 105, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-]
+// const products = [
+//     { name: 'kera pickle', rate: 150, off: 25, offrate: 112.5, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'kakka pickle', rate: 250, off: 25, offrate: 187.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'pallathy', rate: 180, off: 25, offrate: 135, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'vayamp', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'kera pickle', rate: 200, off: 25, offrate: 150, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'kakka pickle', rate: 550, off: 25, offrate: 412.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'pallathy', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+//     { name: 'vayamp', rate: 140, off: 25, offrate: 105, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
+// ]
 
 
-function Products({ tab }) {
+function Products({ tab,items }) {
     const navigate = useNavigate()
     const { setDetails } = useContext(UserContext)
     const [icon, seticon] = useState()
@@ -33,14 +34,13 @@ function Products({ tab }) {
         console.log(index);
         seticon(index)
     }
-
-    console.log(tab);
+    
 
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2} sx={{ ml: '1rem' }}>
-                {products.map((item, index) =>
+                {items.map((item, index) =>
                     <Grid item xs={6} md={2} key={index}>
                         <Paper elevation={3} sx={{ ml: '-2rem', width: '100%', position: 'relative' }}>
                             {icon === index ? <FavoriteBorderIcon key={index} onClick={handleIcon(index)} className='like_btn' style={{ color: "red" }} /> : <FavoriteBorderIcon onClick={handleIcon(index)} key={index} className='like_btn' />}
@@ -58,8 +58,9 @@ function Products({ tab }) {
                                     height: '9rem',
                                     position: 'absolute'
                                 }}>
-
-                                    <img alt='' src={item.url} width='82%' height='100%'></img>
+                                    <img alt='img' src={baseUrl+'/'+item.url} width='82%' height='100%'></img>
+                                    {console.log(baseUrl+'/'+item.url)}
+                                    
                                 </Box>
                                 <Box sx={{
                                     display: 'flex',
@@ -72,7 +73,7 @@ function Products({ tab }) {
                                     <Typography component={'span'}>{item.name}</Typography>
                                     <Typography component={'span'}>{item.discription}</Typography>
                                     <Typography component={'span'}>{item.weight}</Typography>
-                                    <Typography component={'span'}>{"₹" + item.rate + "    " + item.off + "off"}</Typography>
+                                    <Typography component={'span'}>{"₹" + item.price + "    " + item.offer + "off"}</Typography>
                                 </Box>
 
                             </Box>
