@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import ProductsView from '../productsView/Products'
 import { baseUrl } from '../../url'
 import axios from '../../axios'
+import { useEffect } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,6 +50,21 @@ export default function FullWidthTabs() {
   const [veg, setVeg] = React.useState([])
   const [nonveg, setNonveg] = React.useState([])
 
+  useEffect(() => {
+    axios.get(`${baseUrl}/api/item/items`).then((doc) => {
+      const vegItems = doc.data.filter((item) => {
+        if (item.category === "veg") return item
+      })
+      const nonvegItems = doc.data.filter((item) => {
+        if (item.category === "nonveg") return item
+      })
+
+      setVeg(vegItems)
+      setNonveg(nonvegItems)
+    })
+  }, [])
+
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -57,17 +73,7 @@ export default function FullWidthTabs() {
     setValue(index);
   };
 
-  axios.get(`${baseUrl}/api/item/items`).then((doc) => {
-    const vegItems = doc.data.filter((item) => {
-      if (item.category === "veg") return item
-    })
-    const nonvegItems = doc.data.filter((item) => {
-      if (item.category === "nonveg") return item
-    })
 
-    setVeg(vegItems)
-    setNonveg(nonvegItems)
-  })
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%', mt: '5.6rem' }}>

@@ -52,7 +52,7 @@ export default function VerticalLinearStepper() {
     };
 
     const handleReset = () => {
-        navigate('/home')
+        navigate('/')
     };
 
     return (

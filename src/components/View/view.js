@@ -5,7 +5,8 @@ import { UserContext } from '../../Context/Context'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom'
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-
+import axios from 'axios';
+import {baseUrl} from '../../url'
 
 
 
@@ -15,6 +16,8 @@ function view() {
     const [product, setProduct] = useState({})
 
     useEffect(() => {
+
+        console.log(details)
         if (details) localStorage.setItem("myObject", JSON.stringify(details));
 
         let item = localStorage.getItem("myObject");
@@ -22,7 +25,25 @@ function view() {
     }, [])
 
     const handleCart = () => {
-        navigate('/cart')
+
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        let data = {
+            itemId: product._id,
+            quantity: 1
+        }
+        const Data = JSON.stringify(data)
+        axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
+            .then((res) => {
+                console.log(res.data);
+                navigate('/cart')
+            })
     }
     const handleOrder = () => {
         navigate('/order')
@@ -56,7 +77,7 @@ function view() {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <img src={product.url} alt='img' width={350} height={300}></img>
+                    <img src={baseUrl+'/'+product.url} alt='img' width={350} height={300}></img>
                 </Paper>
             </Box>
             <Box sx={{
@@ -70,16 +91,16 @@ function view() {
                     pl: '2rem'
                 }}>
                     <Typography sx={{ fontSize: '1.5rem', fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif' }}>{product.name}</Typography>
-                    <Typography>{product.discription}</Typography>
+                    <Typography>{product.description}</Typography>
                     <Box sx={{
                         display: 'flex',
                         gap: 1
                     }}>
-                        <Typography sx={{ fontSize: '1.5rem' }} ><b>{'₹' + product.offrate}</b></Typography>
-                        <Typography color='lightgrey'><s>{product.rate}</s></Typography>
-                        <Typography color='green'>{product.off + '% OFF'}</Typography>
+                        <Typography sx={{ fontSize: '1.5rem' }} ><b>₹{product.price-(product.price*product.offer)/100}</b></Typography>
+                        <Typography color='lightgrey'><s>{product.price}</s></Typography>
+                        <Typography color='green'>{product.offer + '% OFF'}</Typography>
                     </Box>
-                    <Typography>{product.weight}</Typography>
+                    <Typography>{product.weight}g</Typography>
                 </Box>
                 <Box sx={{
                     display: 'flex',

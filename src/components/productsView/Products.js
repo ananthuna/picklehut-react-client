@@ -59,7 +59,7 @@ function Products({ tab,items }) {
                                     position: 'absolute'
                                 }}>
                                     <img alt='img' src={baseUrl+'/'+item.url} width='82%' height='100%'></img>
-                                    {console.log(baseUrl+'/'+item.url)}
+                                    
                                     
                                 </Box>
                                 <Box sx={{
