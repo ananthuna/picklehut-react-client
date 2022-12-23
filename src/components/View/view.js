@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom'
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import axios from 'axios';
-import {baseUrl} from '../../url'
+import { baseUrl } from '../../url'
 
 
 
@@ -24,29 +24,37 @@ function view() {
         setProduct(JSON.parse(item))
     }, [])
 
+
+    let user = localStorage.getItem("user")
+    user = JSON.parse(user)
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+        }
+    }
+    let data = {
+        itemId: product._id,
+        quantity: 1,
+        price: product.price - (product.price * product.offer) / 100
+    }
+    const Data = JSON.stringify(data)
+
     const handleCart = () => {
 
-        let user = localStorage.getItem("user")
-        user = JSON.parse(user)
-        const customConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
-            }
-        }
-        let data = {
-            itemId: product._id,
-            quantity: 1
-        }
-        const Data = JSON.stringify(data)
+
         axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data)
                 navigate('/cart')
             })
     }
     const handleOrder = () => {
-        navigate('/order')
+        axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
+            .then((res) => {
+                console.log(res.data)
+                navigate('/order')
+            })
     }
 
 
@@ -77,7 +85,7 @@ function view() {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <img src={baseUrl+'/'+product.url} alt='img' width={350} height={300}></img>
+                    <img src={baseUrl + '/' + product.url} alt='img' width={350} height={300}></img>
                 </Paper>
             </Box>
             <Box sx={{
@@ -96,7 +104,7 @@ function view() {
                         display: 'flex',
                         gap: 1
                     }}>
-                        <Typography sx={{ fontSize: '1.5rem' }} ><b>₹{product.price-(product.price*product.offer)/100}</b></Typography>
+                        <Typography sx={{ fontSize: '1.5rem' }} ><b>₹{product.price - (product.price * product.offer) / 100}</b></Typography>
                         <Typography color='lightgrey'><s>{product.price}</s></Typography>
                         <Typography color='green'>{product.offer + '% OFF'}</Typography>
                     </Box>

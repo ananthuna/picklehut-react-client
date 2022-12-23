@@ -9,10 +9,11 @@ import IconButton from '@mui/material/IconButton';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Adminicon from './adminicon/AdminIcon';
+import { UserContext } from '../../Context/Context';
 
 
 export default function PrimarySearchAppBar() {
-    const [user, setUser] = React.useState({})
+    const {user,setUser} =React.useContext(UserContext)
     const navigate = useNavigate()
     React.useEffect(() => {
         let User = localStorage.getItem("user");

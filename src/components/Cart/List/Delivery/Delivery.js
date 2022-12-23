@@ -1,9 +1,30 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import Button from '@mui/material/Button';
-import React from 'react'
+import React, { useContext } from 'react';
+import axios from 'axios';
+import {baseUrl} from '../../../../url'
+import { UserContext } from '../../../../Context/Context';
 
-function Delivery() {
+function Delivery({ item }) {
+
+    const { setCartitems } = useContext(UserContext)
+
+    const handleRemove = () => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+
+        axios.delete(`${baseUrl}/api/cart/cartitems/?itemId=${item.itemId}`, customConfig)
+            .then((res) => {
+                setCartitems(res.data)
+            })
+
+    }
     return (
         <Box>
             <Box sx={{
@@ -18,7 +39,7 @@ function Delivery() {
                 mt: '3rem',
             }}>
                 <Button variant="text">Add to wishlist</Button>
-                <Button variant="text">REMOVE</Button>
+                <Button variant="text" onClick={handleRemove}>REMOVE</Button>
             </Box>
         </Box>
     )

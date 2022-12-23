@@ -2,7 +2,7 @@ import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
-function TotalPrice() {
+function TotalPrice({ bill }) {
   return (
 
     <Paper sx={{
@@ -13,27 +13,27 @@ function TotalPrice() {
       <Typography sx={{ pl: '2rem', pt: '1rem' }}>PRICE DETAILS</Typography>
       <hr />
       <Box sx={{
-        display:'flex',
-        flexDirection:'column',
-        gap:2
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2
       }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', pl: '1rem', pr: '1rem' }}>
           <Typography>Price(2items)</Typography>
-          <Typography>₹300</Typography>
+          <Typography>₹{bill}</Typography>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', pl: '1rem', pr: '1rem' }}>
           <Typography>Discount</Typography>
-          <Typography sx={{color:'green'}}>-₹17</Typography>
+          <Typography sx={{ color: 'green' }}>-₹0</Typography>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', pl: '1rem', pr: '1rem' }}>
           <Typography>Delivery Charges</Typography>
-          <Typography>₹47</Typography>
+          <Typography>₹40</Typography>
         </Box>
       </Box>
       <hr />
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', pl: '1rem', pr: '1rem' ,pb:'1rem'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', pl: '1rem', pr: '1rem', pb: '1rem' }}>
         <Typography><b>TOTAL AMOUNT</b></Typography>
-        <Typography><b>₹339</b></Typography>
+        <Typography><b>₹{40+bill}</b></Typography>
       </Box>
     </Paper>
   )

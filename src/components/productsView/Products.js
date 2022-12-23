@@ -7,16 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import './product.css'
 import {baseUrl} from '../../url'
 
-// const products = [
-//     { name: 'kera pickle', rate: 150, off: 25, offrate: 112.5, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'kakka pickle', rate: 250, off: 25, offrate: 187.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'pallathy', rate: 180, off: 25, offrate: 135, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'vayamp', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'kera pickle', rate: 200, off: 25, offrate: 150, weight: '400g', discription: 'sea fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'kakka pickle', rate: 550, off: 25, offrate: 412.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'pallathy', rate: 350, off: 25, offrate: 262.5, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-//     { name: 'vayamp', rate: 140, off: 25, offrate: 105, weight: '400g', discription: 'fresh water fish', url: 'https://m.media-amazon.com/images/I/615J2pvNaGL._SL1000_.jpg' },
-// ]
+
 
 
 function Products({ tab,items }) {

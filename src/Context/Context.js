@@ -6,10 +6,20 @@ export const UserContext = createContext(null)
 export default function Context({ children }) {
     const [details, setDetails] = useState(null)
     const [value, setValue] = useState(0);
-
+    const [user, setUser] = React.useState({})
+    const [cartitems, setCartitems] = useState({})
 
     return (
-        <UserContext.Provider value={{ details, setDetails ,value,setValue}}>
+        <UserContext.Provider value={{
+            details,
+            setDetails,
+            value,
+            setValue,
+            user,
+            setUser,
+            cartitems,
+            setCartitems
+        }}>
             {children}
         </UserContext.Provider>
     )
