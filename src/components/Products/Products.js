@@ -53,12 +53,11 @@ export default function FullWidthTabs() {
   useEffect(() => {
     axios.get(`${baseUrl}/api/item/items`).then((doc) => {
       const vegItems = doc.data.filter((item) => {
-        if (item.category === "veg") return item
+        return item.category === "veg" && item
       })
       const nonvegItems = doc.data.filter((item) => {
-        if (item.category === "nonveg") return item
+        return item.category === "nonveg" && item
       })
-
       setVeg(vegItems)
       setNonveg(nonvegItems)
     })

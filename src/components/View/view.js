@@ -9,7 +9,7 @@ import axios from 'axios';
 import { baseUrl } from '../../url'
 
 
-
+    
 function view() {
     const navigate = useNavigate()
     const { details } = useContext(UserContext)
@@ -94,7 +94,7 @@ function view() {
                 pt: '4rem'
             }}>
                 <Typography sx={{ pl: '8rem' }}>Product Details</Typography>
-                <Box sx={{
+                {product && <Box sx={{
                     pt: '1rem',
                     pl: '2rem'
                 }}>
@@ -109,7 +109,7 @@ function view() {
                         <Typography color='green'>{product.offer + '% OFF'}</Typography>
                     </Box>
                     <Typography>{product.weight}g</Typography>
-                </Box>
+                </Box>}
                 <Box sx={{
                     display: 'flex',
                     gap: 4,

@@ -18,7 +18,8 @@ function List({ items }) {
                     <Box key={index}>
                         <Box sx={{
                             position: 'relative',
-                            display: 'flex'
+                            display: 'flex',
+                            justifyContent:'space-between'
                         }}>
                             <Box sx={{
                                 mt: '1rem',

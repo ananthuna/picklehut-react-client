@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function FullScreenDialog() {
     const [open, setOpen] = React.useState(false);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: "onBlur" });
+    const { register, handleSubmit, reset} = useForm({ mode: "onBlur" }); //removed ', formState: { errors } '
     const [images, setImages] = React.useState();
 
     const upload = (event) => {
