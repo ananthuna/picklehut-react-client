@@ -5,13 +5,15 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { UserContext } from '../../../../Context/Context';
 import axios from 'axios';
-import {baseUrl} from '../../../../url'
+import { baseUrl } from '../../../../url'
 
 function Quantity({ item }) {
-    const [numb, setNumb] = useState(item.quantity)
+    const [numb, setNumb] = useState('')
+    const [quant, setQuant] = useState(0)
     const { setCartitems } = useContext(UserContext)
 
     useEffect(() => {
+        console.log('hai');
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
         const customConfig = {
@@ -26,8 +28,9 @@ function Quantity({ item }) {
         axios.patch(`${baseUrl}/api/cart/cartitems/${item.itemId}`, data, customConfig)
             .then((res) => {
                 setCartitems(res.data)
+                console.log(res.data);
             })
-    }, [numb])
+    }, [quant])
     return (
         <Box sx={{
             display: 'flex',
@@ -39,7 +42,10 @@ function Quantity({ item }) {
                 border: 1,
                 borderRadius: '50%'
             }}>
-                <AddIcon onClick={() => setNumb(numb => numb + 1)} />
+                <AddIcon onClick={() => {
+                    setNumb('+')
+                    setQuant(pre => pre + 1)
+                }} />
             </Box>
             <Box sx={{
                 border: 1,
@@ -52,7 +58,10 @@ function Quantity({ item }) {
                 border: 1,
                 borderRadius: '50%'
             }}>
-                {numb === 1 ? (<RemoveIcon />) : (<RemoveIcon onClick={() => setNumb(numb => numb - 1)} />)}
+                {numb === 1 ? (<RemoveIcon />) : (<RemoveIcon onClick={() => {
+                    setNumb('-')
+                    setQuant(pre => pre - 1)
+                }} />)}
             </Box>
         </Box>
     )

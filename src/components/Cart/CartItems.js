@@ -46,7 +46,7 @@ function CartItems() {
             <Box sx={{
                 width: '40%'
             }}>
-                {cart && <TotalPrice bill={cartitems.bill} />}
+                {cart && <TotalPrice bill={cartitems.bill} items={cartitems.items} />}
             </Box>
         </Box>
     )
