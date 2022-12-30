@@ -24,6 +24,7 @@ function CartItems() {
             .then((res) => {
                 setCart(true)
                 setCartitems(res.data)
+                
             })
     }, [])
 

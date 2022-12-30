@@ -5,7 +5,7 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import { Badge, IconButton } from '@mui/material';
 import { UserContext } from '../../../Context/Context';
 import axios from 'axios';
-import {baseUrl} from '../../../url'
+import { baseUrl } from '../../../url'
 
 function cartIcon() {
     const navigate = useNavigate()
@@ -24,6 +24,10 @@ function cartIcon() {
             .then((res) => {
                 setItems(res.data.items)
                 setCartitems(res.data)
+            }).catch((err) => {
+                if (err.response.statusText === 'Unauthorized') {
+                    navigate('/login')
+                }
             })
 
     }, [cartitems])
