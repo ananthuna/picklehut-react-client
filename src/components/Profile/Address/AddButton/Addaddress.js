@@ -41,9 +41,8 @@ export default function FullScreenDialog() {
         }
         axios.post(`${baseUrl}/api/user/address`, Data, customConfig)
             .then((res) => {
-                alert('address added')
+                alert('Addess added')
                 reset()
-                // console.log(res.data);
             })
     }
 
@@ -125,7 +124,7 @@ export default function FullScreenDialog() {
                                     renderInput={(params) => <TextField
                                         {...params}
                                         label="Home/Office"
-                                        {...register('delivert', { required: true })}
+                                        {...register('delivery', { required: true })}
                                         style={{ width: 400 }}
                                     />}
                                 />
