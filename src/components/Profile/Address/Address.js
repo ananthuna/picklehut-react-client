@@ -4,6 +4,7 @@ import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import AddButton from './AddButton/Addaddress'
 
 
 function Address() {
@@ -27,7 +28,7 @@ function Address() {
 
 
                 }}>
-                    <Button variant="outlined"><AddIcon />Add Address</Button>
+                    <AddButton/>
                 </Box>
                 <Box sx={{
                     border: 1,
