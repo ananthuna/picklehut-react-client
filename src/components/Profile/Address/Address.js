@@ -2,7 +2,6 @@ import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
-// import EditIcon from '@mui/icons-material/Edit';
 import AddButton from './AddButton/Addaddress';
 import axios from 'axios';
 import { baseUrl } from '../../../url'
@@ -42,6 +41,7 @@ function Address() {
         axios.delete(`${baseUrl}/api/user/address/?id=${id}`, customConfig)
             .then((res) => {
                 console.log(res.data)
+                setAddress(res.data)
             })
     }
 
@@ -103,9 +103,6 @@ function Address() {
                             display: 'flex',
                             gap: 2
                         }}>
-                            {/* <IconButton sx={{ color: 'green' }} aria-label="add to shopping cart">
-                                <EditIcon />
-                            </IconButton> */}
                             <IconButton onClick={() => handleDelete(address._id)} sx={{ color: 'red' }} aria-label="add to shopping cart">
                                 <DeleteIcon />
                             </IconButton>

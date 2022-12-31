@@ -1,19 +1,37 @@
 import { Grid, Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Context/Context'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import './product.css'
-import {baseUrl} from '../../url'
+import { baseUrl } from '../../url'
+import axios from 'axios'
 
 
 
 
-function Products({ tab,items }) {
+function Products({ tab, items }) {
     const navigate = useNavigate()
     const { setDetails } = useContext(UserContext)
-    const [icon, seticon] = useState()
+    const [wishlist, setWishlist] = useState([])
+    useEffect(() => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+
+        axios.get(`${baseUrl}/api/wishlist/list`, customConfig)
+            .then((res) => {
+                setWishlist(res.data.items)
+            }).catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
 
     const handleView = (item) => () => {
         console.log(item);
@@ -21,11 +39,25 @@ function Products({ tab,items }) {
         navigate('/view')
     }
 
-    const handleIcon = (index) => () => {
-        console.log(index);
-        seticon(index)
+    const handleIcon = (id) => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        const Data = {
+            itemId: id
+        }
+        axios.post(`${baseUrl}/api/wishlist/list`, Data, customConfig)
+            .then((res) => {
+                setWishlist(res.data.items)
+            }).catch((err) => {
+                console.log(err);
+            })
     }
-    
+
 
 
     return (
@@ -34,7 +66,19 @@ function Products({ tab,items }) {
                 {items.map((item, index) =>
                     <Grid item xs={6} md={2} key={index}>
                         <Paper elevation={3} sx={{ ml: '-2rem', width: '100%', position: 'relative' }}>
-                            {icon === index ? <FavoriteBorderIcon key={index} onClick={handleIcon(index)} className='like_btn' style={{ color: "red" }} /> : <FavoriteBorderIcon onClick={handleIcon(index)} key={index} className='like_btn' />}
+                            {wishlist && wishlist.map((wish) =>
+                                wish.itemId == item._id ?
+                                    (
+                                        item.wish ?
+                                            (
+                                                <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' style={{ color: "red" }} />
+                                            ) : (
+                                                <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' style={{ color: "red" }} />
+                                            )
+                                    ) : (
+                                        <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' />
+                                    )
+                            )}
                             <Box className='box' sx={{
                                 width: '15rem',
                                 height: '17rem',
@@ -49,9 +93,9 @@ function Products({ tab,items }) {
                                     height: '9rem',
                                     position: 'absolute'
                                 }}>
-                                    <img alt='img' src={baseUrl+'/'+item.url} width='82%' height='100%'></img>
-                                    
-                                    
+                                    <img alt='img' src={baseUrl + '/' + item.url} width='82%' height='100%'></img>
+
+
                                 </Box>
                                 <Box sx={{
                                     display: 'flex',

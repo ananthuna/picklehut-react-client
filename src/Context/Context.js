@@ -18,7 +18,7 @@ export default function Context({ children }) {
             user,
             setUser,
             cartitems,
-            setCartitems
+            setCartitems,
         }}>
             {children}
         </UserContext.Provider>

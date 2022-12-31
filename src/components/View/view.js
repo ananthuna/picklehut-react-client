@@ -9,7 +9,7 @@ import axios from 'axios';
 import { baseUrl } from '../../url'
 
 
-    
+
 function view() {
     const navigate = useNavigate()
     const { details } = useContext(UserContext)
@@ -25,22 +25,24 @@ function view() {
     }, [])
 
 
-    let user = localStorage.getItem("user")
-    user = JSON.parse(user)
-    const customConfig = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
-        }
-    }
-    let data = {
-        itemId: product._id,
-        quantity: 1,
-        price: product.price - (product.price * product.offer) / 100
-    }
-    const Data = JSON.stringify(data)
+
 
     const handleCart = () => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        console.log(user.token);
+        let data = {
+            itemId: product._id,
+            quantity: 1,
+            price: product.price - (product.price * product.offer) / 100
+        }
+        const Data = JSON.stringify(data)
 
 
         axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
@@ -50,6 +52,21 @@ function view() {
             })
     }
     const handleOrder = () => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        console.log(user.token);
+        let data = {
+            itemId: product._id,
+            quantity: 1,
+            price: product.price - (product.price * product.offer) / 100
+        }
+        const Data = JSON.stringify(data)
         axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
             .then((res) => {
                 console.log(res.data)

@@ -37,8 +37,8 @@ function WishList() {
                 }}>
                     <img src={product.url} alt='img' width={150} height={100}></img>
                 </Box>
-                <Box sx={{ml:'5rem'}}>
-                    <ProductDetails />
+                <Box sx={{ ml: '5rem' }}>
+                    {product && <ProductDetails item={product} />}
                 </Box>
                 <Box sx={{
                     ml: '32rem',
