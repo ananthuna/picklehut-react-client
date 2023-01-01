@@ -1,6 +1,12 @@
-.like_btn{
+.like_btn1{
     position: absolute;
     top:1rem;
     left:10rem;
     z-index: 100;
+}
+.like_btn2{
+    position: absolute;
+    top:1rem;
+    left:10rem;
+    z-index: 99;
 }

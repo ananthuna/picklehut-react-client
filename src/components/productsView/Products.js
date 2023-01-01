@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Context/Context'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import './product.css'
 import { baseUrl } from '../../url'
 import axios from 'axios'
@@ -34,7 +34,6 @@ function Products({ tab, items }) {
 
 
     const handleView = (item) => () => {
-        console.log(item);
         if (item) setDetails(item)
         navigate('/view')
     }
@@ -53,6 +52,7 @@ function Products({ tab, items }) {
         axios.post(`${baseUrl}/api/wishlist/list`, Data, customConfig)
             .then((res) => {
                 setWishlist(res.data.items)
+                console.log(res.data.items);
             }).catch((err) => {
                 console.log(err);
             })
@@ -66,19 +66,16 @@ function Products({ tab, items }) {
                 {items.map((item, index) =>
                     <Grid item xs={6} md={2} key={index}>
                         <Paper elevation={3} sx={{ ml: '-2rem', width: '100%', position: 'relative' }}>
-                            {wishlist && wishlist.map((wish) =>
-                                wish.itemId == item._id ?
-                                    (
-                                        item.wish ?
-                                            (
-                                                <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' style={{ color: "red" }} />
-                                            ) : (
-                                                <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' style={{ color: "red" }} />
-                                            )
-                                    ) : (
-                                        <FavoriteBorderIcon onClick={() => handleIcon(item._id)} className='like_btn' />
-                                    )
+                            {wishlist && wishlist.map((wish, index) =>
+                                wish.itemId === item._id &&
+
+                                <FavoriteIcon key={index} onClick={() => handleIcon(item._id)} className='like_btn1' style={{ color: "red" }} />
+                                // console.log('red')
+
                             )}
+                            
+                                <FavoriteIcon onClick={() => handleIcon(item._id)} className='like_btn2' />
+                                
                             <Box className='box' sx={{
                                 width: '15rem',
                                 height: '17rem',
