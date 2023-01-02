@@ -13,6 +13,7 @@ function WishList() {
     const navigate = useNavigate()
     const [products, setProducts] = useState([])
     const [wishlist, setWishlist] = useState([])
+
     const { setDetails } = useContext(UserContext)
 
     useEffect(() => {

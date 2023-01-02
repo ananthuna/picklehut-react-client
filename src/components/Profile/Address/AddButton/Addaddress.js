@@ -57,7 +57,7 @@ export default function FullScreenDialog() {
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Add Address<AddIcon />
+                Add New Address<AddIcon />
             </Button>
             <Dialog
                 fullScreen

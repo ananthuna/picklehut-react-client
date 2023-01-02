@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -10,6 +10,9 @@ import Typography from '@mui/material/Typography';
 import List from '../Cart/List/List'
 import PaymentOptions from './RadioOption/PaymentOptions'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { baseUrl } from '../../url';
+import Billdetails from './Billdetails/TotalPrice'
 
 const steps = [
     {
@@ -28,8 +31,12 @@ const steps = [
               they're running and how to resolve approval issues.`,
     },
     {
+        label: 'BILL DETAILS',
+        description: 'total'
+    },
+    {
         label: 'PAYMENT OPTIONS',
-        options:[
+        options: [
             'Cash on delivery',
             'UPI',
             'net Banking'
@@ -39,7 +46,28 @@ const steps = [
 
 export default function VerticalLinearStepper() {
     const [activeStep, setActiveStep] = useState(0);
-    const navigate=useNavigate()
+    const [cartitems, setCartitems] = useState([])
+    const [user, setUser] = useState('')
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        console.log(user);
+        setUser(user.firstName)
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+
+        axios.get(`${baseUrl}/api/cart/cartitems`, customConfig)
+            .then((res) => {
+                setCartitems(res.data)
+
+            })
+    }, [])
+
 
 
 
@@ -68,7 +96,7 @@ export default function VerticalLinearStepper() {
                     <Step key={step.label}>
                         <StepLabel
                             optional={
-                                index === 2 ? (
+                                index === 3 ? (
                                     <Typography variant="caption">Last step</Typography>
                                 ) : null
                             }
@@ -76,9 +104,11 @@ export default function VerticalLinearStepper() {
                             {step.label}
                         </StepLabel>
                         <StepContent>
-                            {step.label !== "ORDER SUMMARY" && <Typography>{step.description}</Typography>}
-                            {step.label === "ORDER SUMMARY" ? <List /> : ''}
-                            {step.label==='PAYMENT OPTIONS' && <PaymentOptions/>}
+                            {step.label === "LOGIN" && <Typography>{user}</Typography>}
+                            {step.label === "DELIVERY ADDRESS" && <Typography>{step.description}</Typography>}
+                            {step.label === "ORDER SUMMARY" ? <List items={cartitems.items} /> : ''}
+                            {step.label === "BILL DETAILS" && <Billdetails bill={cartitems.bill} items={cartitems.items} />}
+                            {step.label === 'PAYMENT OPTIONS' && <PaymentOptions />}
                             <Box sx={{ mb: 2 }}>
                                 <div>
                                     <Button

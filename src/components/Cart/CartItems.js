@@ -11,6 +11,10 @@ import { UserContext } from '../../Context/Context'
 function CartItems() {
     const [cart, setCart] = React.useState(false)
     const { cartitems, setCartitems } = useContext(UserContext)
+    const { address, setAddress } = useContext(UserContext)
+    const [name, setName] = React.useState('')
+    const [number, setNumber] = React.useState('')
+
     useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
@@ -24,8 +28,18 @@ function CartItems() {
             .then((res) => {
                 setCart(true)
                 setCartitems(res.data)
-                
+
             })
+
+
+        axios.get(`${baseUrl}/api/user/address`, customConfig)
+            .then((res) => {
+                setAddress(res.data.address.pop())
+                setName(res.data.firstName)
+                setNumber(res.data.number)
+                console.log(res.data)
+            })
+
     }, [])
 
 
@@ -38,7 +52,7 @@ function CartItems() {
                 mt: '5.6rem',
                 width: '60%'
             }}>
-                <Address />
+                {address && name && number && <Address address={address} name={name} number={number} />}
 
                 {cart && <List items={cartitems.items} />}
 

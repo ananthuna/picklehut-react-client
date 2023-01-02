@@ -1,10 +1,11 @@
 import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import Button from '@mui/material/Button';
 import './Address.css'
+import Changebtn from './ChangeAddress/ChangeAddressbtn'
 
-function Address() {
+function Address({ address, name, number }) {
+
     return (
         <Paper sx={{
             display: 'flex',
@@ -12,22 +13,32 @@ function Address() {
             m: '1rem',
         }}>
 
-            <Box sx={{ p: '1rem' }}>
-                <Typography>
-                    Delivery to: Ananthu N A,689595
-                    <Button sx={{ width: '2rem', height: '1rem', ml: '0.5rem' }} variant="contained" disabled>
-                        Home
-                    </Button>
-                </Typography>
-                <Typography>Vishnupresadham,mampuzhakary,ramankary po,allapuzha,kerala</Typography>
+
+            <Box sx={{
+                width: '60rem',
+                height: '5rem',
+                pl: '2rem',
+                pr: '2rem',
+                pt:'1rem'
+
+            }}
+                key={address._id}>
+                <Box>
+                    <Box sx={{
+                        display: 'flex',
+                        gap: 3
+                    }}>
+                        <Typography>Delivery to:</Typography>
+                        <Typography>{name}</Typography>
+                        <Typography>{number}</Typography>
+                    </Box>
+                    <Box>
+                        <Typography>{address.address + ',' + address.city + ' '}<b>{'pin:' + address.pin}</b></Typography>
+                    </Box>
+                </Box>
+
             </Box>
-            <Button variant="outlined" sx={{
-                width: '5.5rem',
-                height: '2rem',
-                m: '2rem',
-            }}>
-                change
-            </Button>
+            <Changebtn />
 
         </Paper>
     )
