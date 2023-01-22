@@ -13,7 +13,7 @@ import { UserContext } from '../../Context/Context';
 
 
 export default function PrimarySearchAppBar() {
-    const {user,setUser} =React.useContext(UserContext)
+    const { user, setUser } = React.useContext(UserContext)
     const navigate = useNavigate()
     React.useEffect(() => {
         let User = localStorage.getItem("user");
@@ -24,7 +24,7 @@ export default function PrimarySearchAppBar() {
 
 
     return (
-        <Box className='header' sx={{ borderBottom: 1 }}>
+        <Box className='header'>
             <Box sx={{
                 position: 'relative',
                 width: '12rem',
@@ -65,9 +65,6 @@ export default function PrimarySearchAppBar() {
                     </Box>
                 )
                 }
-
-
-
             </Box >
         </Box >
     );

@@ -9,6 +9,7 @@ export default function Context({ children }) {
     const [user, setUser] = React.useState({})
     const [cartitems, setCartitems] = useState({})
     const [address, setAddress] = React.useState()
+    const [method, setMethod] = React.useState('');
 
     return (
         <UserContext.Provider value={{
@@ -21,7 +22,9 @@ export default function Context({ children }) {
             cartitems,
             setCartitems,
             address,
-            setAddress
+            setAddress,
+            method,
+            setMethod
         }}>
             {children}
         </UserContext.Provider>

@@ -13,6 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../../url';
 import Billdetails from './Billdetails/TotalPrice'
+import Address from './Address/address'
+import { UserContext } from '../../Context/Context';
+// import useRazorpay from "react-razorpay";
 
 const steps = [
     {
@@ -45,9 +48,14 @@ const steps = [
 ];
 
 export default function VerticalLinearStepper() {
-    const [activeStep, setActiveStep] = useState(0);
-    const [cartitems, setCartitems] = useState([])
+    const { method } = React.useContext(UserContext)
+    const [activeStep, setActiveStep] = useState(0)
     const [user, setUser] = useState('')
+    const [number, setNumber] = useState()
+    const [address, setAddress] = useState({})
+    const [bill, setBill] = useState()
+    const [items, setItems] = useState()
+    const [orderId, setOrderId] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -55,18 +63,46 @@ export default function VerticalLinearStepper() {
         user = JSON.parse(user)
         console.log(user);
         setUser(user.firstName)
+        setNumber(user.number)
         const customConfig = {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
         }
 
-        axios.get(`${baseUrl}/api/cart/cartitems`, customConfig)
+        axios.get(`${baseUrl}/api/order/placeOrder`, customConfig)
             .then((res) => {
-                setCartitems(res.data)
-
+                console.log(res.data);
+                setOrderId(res.data.orderId)
+                setAddress(res.data.address)
+                setBill(res.data.bill)
+                setItems(res.data.items)
             })
     }, [])
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        }
+    }, []);
+
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () => {
+                resolve(true);
+            };
+            script.onerror = () => {
+                resolve(false);
+            };
+            document.body.appendChild(script);
+        });
+    }
 
 
 
@@ -82,6 +118,79 @@ export default function VerticalLinearStepper() {
     const handleReset = () => {
         navigate('/')
     };
+
+
+
+    const handleOrder = async () => {
+        console.log(method);
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        );
+
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?");
+            return;
+        }
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        const Data = {
+            payment: method,
+            orderId: orderId
+        }
+
+        axios.post(`${baseUrl}/api/order/checkout`, Data, customConfig)
+            .then((res) => {
+                console.log(res.data);
+                const amount = res.data.order.amount
+                const orderId = res.data.order.id
+                const currency = res.data.order.currency
+                var options = {
+                    "key": "rzp_test_urWhsnXVh5JJ6f", // Enter the Key ID generated from the Dashboard
+                    "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": currency,
+                    "name": "pickle hut",
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+                    "handler": function (res) {
+                        alert(res.razorpay_payment_id)
+                        alert(res.razorpay_order_id)
+                        alert(res.razorpay_signature)
+                        const Data = {
+                            res
+                        }
+
+                        axios.post(`${baseUrl}/api/order/verify-payment`, Data, customConfig)
+                            .then((res) => {
+
+                            })
+                        navigate('/order')
+
+                    },
+                    "prefill": {
+                        "name": "Gaurav Kumar",
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9999999999"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new window.Razorpay(options);
+                rzp1.open();
+
+            })
+    }
 
     return (
         <Box sx={{
@@ -105,19 +214,30 @@ export default function VerticalLinearStepper() {
                         </StepLabel>
                         <StepContent>
                             {step.label === "LOGIN" && <Typography>{user}</Typography>}
-                            {step.label === "DELIVERY ADDRESS" && <Typography>{step.description}</Typography>}
-                            {step.label === "ORDER SUMMARY" ? <List items={cartitems.items} /> : ''}
-                            {step.label === "BILL DETAILS" && <Billdetails bill={cartitems.bill} items={cartitems.items} />}
+                            {step.label === "DELIVERY ADDRESS" && <Address name={user} number={number} address={address} />}
+                            {step.label === "ORDER SUMMARY" ? <List items={items} /> : ''}
+                            {step.label === "BILL DETAILS" && <Billdetails bill={bill - 40} items={items} />}
                             {step.label === 'PAYMENT OPTIONS' && <PaymentOptions />}
                             <Box sx={{ mb: 2 }}>
                                 <div>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{ mt: 1, mr: 1 }}
-                                    >
-                                        {index === steps.length - 1 ? 'Checkout' : 'Continue'}
-                                    </Button>
+                                    {index === steps.length - 1 ?
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleOrder}
+                                            sx={{ mt: 1, mr: 1 }}
+                                        >
+                                            Checkout
+                                        </Button>
+                                        :
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleNext}
+                                            sx={{ mt: 1, mr: 1 }}
+                                        >
+                                            Continue
+                                        </Button>
+                                    }
+
                                     <Button
                                         disabled={index === 0}
                                         onClick={handleBack}

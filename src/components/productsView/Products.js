@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -18,6 +18,7 @@ function Products({ tab, items }) {
     useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
+        if (!user) return navigate('/login')
         const customConfig = {
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -61,59 +62,73 @@ function Products({ tab, items }) {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} sx={{ ml: '1rem' }}>
+        <Box sx={{ flexGrow: 1, bgcolor: '#F6F3F3' }}>
+            <Grid container spacing={2} sx={{ pl: '2rem', bgcolor: '#F6F3F3' }}>
                 {items.map((item, index) =>
-                    <Grid item xs={6} md={2} key={index}>
-                        <Paper elevation={3} sx={{ ml: '-2rem', width: '100%', position: 'relative' }}>
-                            {wishlist && wishlist.map((wish, index) =>
-                                wish.itemId === item._id &&
+                    <Grid item xs={6} md={2} key={index} >
+                        <Box  sx={{ ml: '-2.5rem', width: '100%', position: 'relative' }}>
+                            <Box >
+                                {wishlist && wishlist.map((wish, index) =>
+                                    wish.itemId === item._id &&
 
-                                <FavoriteIcon key={index} onClick={() => handleIcon(item._id)} className='like_btn1' style={{ color: "red" }} />
-                                // console.log('red')
+                                    <FavoriteIcon key={index} onClick={() => handleIcon(item._id)} className='like_btn1' style={{ color: "#FC5750" }} />
+                                )}
 
-                            )}
-                            
                                 <FavoriteIcon onClick={() => handleIcon(item._id)} className='like_btn2' />
-                                
+                            </Box>
                             <Box className='box' sx={{
                                 width: '15rem',
                                 height: '17rem',
                                 position: 'relative',
-                                mt: '2rem',
+                                mt: '0.5rem',
                                 pt: '1rem',
-                                pr: '3rem'
+                                pl: '1rem',
+                                pr: '1.7rem',
+                                display: 'flex',
+                                gap: 1,
+                                bgcolor: '#F6F3F3'
                             }} onClick={handleView(item)}>
-
-                                <Box sx={{
-                                    width: '15rem',
-                                    height: '9rem',
-                                    position: 'absolute'
-                                }}>
-                                    <img alt='img' src={baseUrl + '/' + item.url} width='82%' height='100%'></img>
-
-
+                                <Box className='boxitems' sx={{ bgcolor: 'white', width: '14rem','&:hover': {
+                                                color: 'blue',
+                                           }, }} >
+                                    <Box sx={{
+                                        width: '15rem',
+                                        height: '10rem',
+                                        position: 'absolute'
+                                    }}>
+                                        <img alt='img' src={baseUrl + '/' + item.url} width='82%' height='100%'></img>
+                                    </Box>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        pl: '1rem',
+                                        position: 'relative',
+                                        pt: '11rem'
+                                    }}>
+                                        <Typography className='boxZoom' sx={{
+                                            fontSize: '1rem',
+                                            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                                             
+                                        }}>
+                                            {item.name}
+                                        </Typography>
+                                        <Box sx={{
+                                            display: 'flex',
+                                            gap: 1
+                                        }}>
+                                            <Typography color='black' sx={{ fontSize: '1rem' }} ><b>₹{item.price - (item.price * item.offer) / 100}</b></Typography>
+                                            <Typography color='lightgrey'><s>{item.price}</s></Typography>
+                                            <Typography color='green'>{item.offer + '% OFF'}</Typography>
+                                        </Box>
+                                        <Typography color='black'>{item.weight}g</Typography>
+                                    </Box>
                                 </Box>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                    pt: '9rem'
-                                }}>
-                                    <Typography component={'span'}>{item.name}</Typography>
-                                    <Typography component={'span'}>{item.discription}</Typography>
-                                    <Typography component={'span'}>{item.weight}</Typography>
-                                    <Typography component={'span'}>{"₹" + item.price + "    " + item.offer + "off"}</Typography>
-                                </Box>
-
                             </Box>
-                        </Paper>
+                        </Box>
                     </Grid>
                 )}
             </Grid>
-        </Box>
+        </Box >
     )
 }
 

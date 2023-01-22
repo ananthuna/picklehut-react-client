@@ -1,12 +1,19 @@
-.like_btn1{
+.like_btn1 {
     position: absolute;
-    top:1rem;
-    left:10rem;
+    top: 1.5rem;
+    left: 11.4rem;
     z-index: 100;
 }
-.like_btn2{
+
+.like_btn2 {
     position: absolute;
-    top:1rem;
-    left:10rem;
+    top: 1.5rem;
+    left: 11.4rem;
     z-index: 99;
+    color: #EEEBEB;
+}
+
+.boxitems {
+    position: relative;
+    z-index: 10;
 }
