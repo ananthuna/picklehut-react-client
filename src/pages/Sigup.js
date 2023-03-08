@@ -57,17 +57,18 @@ export default function SignUp() {
         'Content-Type': 'application/json'
       }
     };
+    console.log(data);
     axios.post(`${baseUrl}/api/user/signup`, Data, customConfig)
       .then((response) => {
 
         console.log(response.data);
-        if (response.data) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-          navigate('/')
-        }
-        if (response.data === "already used email") {
-          setEmail(true)
-        }
+        
+        // if (response.data === "already used email") {
+        //   setEmail(true)
+        // } else {
+        //   localStorage.setItem("user", JSON.stringify(response.data));
+        //   navigate('/')
+        // }
 
       })
   };

@@ -11,7 +11,7 @@ function Products() {
   const [nonveg, setNonveg] = React.useState([])
 
   useEffect(() => {
-    axios.get(`${baseUrl}/api/item/items`).then((doc) => {
+    axios.get(`https://server.picklehut.co.in/api/item/items`).then((doc) => {
       const vegItems = doc.data.filter((item) => {
         return item.category === "veg" && item
       })

@@ -65,6 +65,7 @@ export default function SignIn({ socket }) {
     };
 
     axios.post(`${baseUrl}/api/user/login`, Data, customConfig).then((response) => {
+      console.log(response.data);
       if (response.data.err) {
         switch (response.data.err) {
           case "No account":
