@@ -14,7 +14,7 @@ function cartIcon() {
     useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        if(!user) return navigate('/login')
+        if(!user) return navigate('/')
         const customConfig = {
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -27,7 +27,7 @@ function cartIcon() {
                 setCartitems(res.data)
             }).catch((err) => {
                 if (err.response.statusText === 'Unauthorized') {
-                    navigate('/login')
+                    navigate('/')
                 }
             })
 

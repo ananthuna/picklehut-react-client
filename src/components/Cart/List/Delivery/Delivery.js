@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import Button from '@mui/material/Button';
 import React, { useContext } from 'react';
 import axios from 'axios';
-import {baseUrl} from '../../../../url'
+import { baseUrl } from '../../../../url'
 import { UserContext } from '../../../../Context/Context';
 
 function Delivery({ item }) {
@@ -25,6 +25,25 @@ function Delivery({ item }) {
             })
 
     }
+
+    const handleWishlist = (id) => {
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+        const Data = {
+            itemId: id
+        }
+        axios.post(`${baseUrl}/api/wishlist/list`, Data, customConfig)
+            .then((res) => {
+                console.log(res.data.items);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
     return (
         <Box>
             <Box sx={{
@@ -38,7 +57,7 @@ function Delivery({ item }) {
                 display: 'flex',
                 mt: '3rem',
             }}>
-                <Button variant="text">Add to wishlist</Button>
+                <Button variant="text" onClick={() => handleWishlist(item.itemId)}>Add to wishlist</Button>
                 <Button variant="text" onClick={handleRemove}>REMOVE</Button>
             </Box>
         </Box>

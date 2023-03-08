@@ -48,7 +48,7 @@ function view() {
         axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
             .then((res) => {
                 console.log(res.data)
-                navigate('/cart')
+                navigate('/')
             })
     }
     const handleOrder = () => {
@@ -70,7 +70,7 @@ function view() {
         axios.post(`${baseUrl}/api/cart/cartitems`, Data, customConfig)
             .then((res) => {
                 console.log(res.data)
-                navigate('/order')
+                navigate('/cart')
             })
     }
 

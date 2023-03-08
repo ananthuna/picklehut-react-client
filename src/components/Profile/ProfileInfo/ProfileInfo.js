@@ -14,7 +14,7 @@ export default function StateTextFields() {
     const [number, setNumber] = React.useState('+917012031852')
     React.useEffect(() => {
         let user = localStorage.getItem("user")
-        user = JSON.parse(user)
+        user = JSON.parse(user) || ''
         const customConfig = {
             headers: {
                 'Authorization': `Bearer ${user.token}`

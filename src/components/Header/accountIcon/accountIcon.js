@@ -11,6 +11,8 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import { useNavigate } from 'react-router-dom'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { UserContext } from '../../../Context/Context';
+import axios from 'axios';
+import { baseUrl } from '../../../url';
 
 
 const StyledMenu = styled((props) => (
@@ -59,7 +61,7 @@ function accountIcon() {
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const {user} =React.useContext(UserContext)
+    const { user } = React.useContext(UserContext)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -68,10 +70,23 @@ function accountIcon() {
         setAnchorEl(null);
     };
     const handleLogout = () => {
-        localStorage.removeItem("user");
-        handleClose()
-        navigate('/')
-        window.location.reload()
+        let user = localStorage.getItem("user")
+        user = JSON.parse(user)
+        console.log(baseUrl);
+        const Data = ''
+        const customConfig = {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+
+        axios.post(`${baseUrl}/api/user/logout`, Data, customConfig)
+            .then((res) => {
+                localStorage.removeItem("user");
+                handleClose()
+                navigate('/')
+            })
+
     }
     return (
         <Box>
@@ -104,7 +119,7 @@ function accountIcon() {
                     handleClose()
                 }} disableRipple>
                     <PersonIcon />
-                    {user? user.firstName : 'My account'}
+                    {user ? user.firstName : 'My account'}
                 </MenuItem>
                 <MenuItem onClick={() => {
                     navigate('/account')

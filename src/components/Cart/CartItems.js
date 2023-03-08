@@ -61,17 +61,22 @@ function CartItems() {
             items: cartitems.items
         }
 
-        axios.post(`${baseUrl}/api/order/placeOrder`, Data, customConfig)
-            .then((res) => {
-                navigate('/order')
-            })
+        if (cartitems.items) {
+            axios.post(`${baseUrl}/api/order/placeOrder`, Data, customConfig)
+                .then((res) => {
+                    navigate('/order')
+                })
+        } else {
+            alert('cart is empty')
+        }
     }
 
 
     return (
         <Box sx={{
             display: 'flex',
-            bgcolor: '#F8F8F8'
+            bgcolor: '#F8F8F8',
+            pb: '9rem'
         }}>
             <Box sx={{
                 mt: '5.6rem',

@@ -19,7 +19,7 @@ function Address({ address, name, number }) {
                 height: '5rem',
                 pl: '2rem',
                 pr: '2rem',
-                pt:'1rem'
+                pt: '1rem'
 
             }}
                 key={address._id}>
@@ -28,7 +28,7 @@ function Address({ address, name, number }) {
                         display: 'flex',
                         gap: 3
                     }}>
-                        <Typography>Delivery to:</Typography>
+                        <Typography><b>Delivery to:</b></Typography>
                         <Typography>{name}</Typography>
                         <Typography>{number}</Typography>
                     </Box>

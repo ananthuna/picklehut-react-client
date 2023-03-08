@@ -49,7 +49,7 @@ export default function SignIn({ socket }) {
   const handleLogin = (event) => {
 
     event.preventDefault()
-    setOpen(!open)
+
     const data = new FormData(event.currentTarget)
     token = localStorage.getItem("user.token")
     const loginData = {
@@ -69,24 +69,31 @@ export default function SignIn({ socket }) {
         switch (response.data.err) {
           case "No account":
             setEmailError(true)
+            setPasswordError(false)
+            setOpen(false)
             break;
           case "invalid password":
             setPasswordError(true)
+            setEmailError(false)
+            setOpen(false)
             break;
           default:
             setEmailError(true)
             setPasswordError(true)
+            setOpen(false)
             break;
         }
       } else {
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate('/')
+        // history.push('/')
       }
     })
   };
 
   const handleSignup = () => {
     navigate('/signup')
+    // history.push('/signup')
   }
 
   return (

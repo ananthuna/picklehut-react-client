@@ -15,7 +15,6 @@ import { baseUrl } from '../../url';
 import Billdetails from './Billdetails/TotalPrice'
 import Address from './Address/address'
 import { UserContext } from '../../Context/Context';
-// import useRazorpay from "react-razorpay";
 
 const steps = [
     {
@@ -147,6 +146,7 @@ export default function VerticalLinearStepper() {
         axios.post(`${baseUrl}/api/order/checkout`, Data, customConfig)
             .then((res) => {
                 console.log(res.data);
+                if (res.data.order === 'placed') return alert(res.data.order) &&  navigate('/order')
                 const amount = res.data.order.amount
                 const orderId = res.data.order.id
                 const currency = res.data.order.currency

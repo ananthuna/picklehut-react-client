@@ -22,6 +22,7 @@ function Products() {
       setNonveg(nonvegItems)
     })
   }, [])
+  
 
   return (
     <Box sx={{ bgcolor: '#F6F3F3', mt: '5rem', pl: '1rem', pt: '6rem', pb: '2rem' }}>
