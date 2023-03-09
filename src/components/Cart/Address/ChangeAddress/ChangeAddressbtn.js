@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -7,9 +6,11 @@ import { baseUrl } from '../../../../url'
 import { Box } from '@mui/system';
 import AddButton from '../../../Profile/Address/AddButton/Addaddress'
 import { UserContext } from '../../../../Context/Context';
+import React from "react";
 
-export default function BasicPopover() {
-    const [open, setopen] = React.useState(false)
+export default function App() {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
     const [addresss, setAddresss] = React.useState([])
     const [name, setName] = React.useState('')
     const [number, setNumber] = React.useState('')
@@ -30,49 +31,45 @@ export default function BasicPopover() {
                 setAddresss(res.data.address)
                 setName(res.data.firstName)
                 setNumber(res.data.number)
-                console.log(res.data)
+                // console.log(res.data)
             })
     }, [])
 
-    const handleClick = () => {
-        setopen(true)
-    }
-
-    const handleClose = () => {
-        setopen(false)
-    };
-
     const handleaddress = (address) => () => {
         setAddress(address)
-        setopen(false)
+        setAnchorEl(null)
     }
-
-
-    const id = open ? 'simple-popover' : undefined;
 
     return (
         <div>
             <Box >
-                <Button aria-describedby={id} variant="outlined" onClick={handleClick}
+                <Button
+                    variant="outlined"
+                    onClick={(event) => {
+                        setAnchorEl(event.currentTarget);
+                    }}
                     sx={{
-                        width: '5.5rem',
+                        width: '12rem',
                         height: '2rem',
                         m: '2rem',
                     }}>
-                    change
+                    change address
                 </Button>
             </Box>
             <Popover
-                id={id}
+                anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                id={open ? "simple-popover" : undefined}
+                onClose={() => {
+                    setAnchorEl(null);
                 }}
                 transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                    horizontal: "center",
+                    vertical: "top",
+                }}
+                anchorOrigin={{
+                    horizontal: "center",
+                    vertical: "bottom",
                 }}
             >
                 <Box sx={{

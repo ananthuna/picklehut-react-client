@@ -18,6 +18,7 @@ function Orders() {
 
         axios.get(`${baseUrl}/api/order/orders`, customConfig)
             .then((res) => {
+                // console.log("orders:"+res.data);
                 console.log(res.data);
                 setItems(res.data)
             })
@@ -49,7 +50,7 @@ function Orders() {
                         pl: '1rem',
                         pr: '1rem',
                         mt: '1rem'
-                    }}>
+                    }} key={item._id}>
 
                         <Box>
                             <img alt='img' src={baseUrl + '/' + item.url} width='100' height='100'></img>

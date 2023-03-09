@@ -13,7 +13,7 @@ function Quantity({ item }) {
     const { setCartitems } = useContext(UserContext)
 
     useEffect(() => {
-        console.log('hai');
+        // console.log('hai');
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
         const customConfig = {
@@ -28,7 +28,7 @@ function Quantity({ item }) {
         axios.patch(`${baseUrl}/api/cart/cartitems/${item.itemId}`, data, customConfig)
             .then((res) => {
                 setCartitems(res.data)
-                console.log(res.data);
+                // console.log(res.data);
             })
     }, [quant])
     return (

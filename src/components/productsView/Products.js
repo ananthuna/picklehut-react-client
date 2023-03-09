@@ -29,7 +29,7 @@ function Products({ tab, items }) {
             .then((res) => {
                 setWishlist(res.data.items)
             }).catch((err) => {
-                console.log(err);
+                navigate('/login')
             })
     }, [])
 
@@ -53,9 +53,10 @@ function Products({ tab, items }) {
         axios.post(`${baseUrl}/api/wishlist/list`, Data, customConfig)
             .then((res) => {
                 setWishlist(res.data.items)
-                console.log(res.data.items);
+                // console.log(res.data.items);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
+                navigate('/login')
             })
     }
 
@@ -65,8 +66,8 @@ function Products({ tab, items }) {
         <Box sx={{ flexGrow: 1, bgcolor: '#F6F3F3' }}>
             <Grid container spacing={2} sx={{ pl: '2rem', bgcolor: '#F6F3F3' }}>
                 {items.map((item, index) =>
-                    <Grid item xs={6} md={2} key={index} >
-                        <Box  sx={{ ml: '-2.5rem', width: '100%', position: 'relative' }}>
+                    <Grid item xs={6} md={2} key={item._id} >
+                        <Box key={item._id} sx={{ ml: '-2.5rem', width: '100%', position: 'relative' }}>
                             <Box >
                                 {wishlist && wishlist.map((wish, index) =>
                                     wish.itemId === item._id &&
@@ -88,9 +89,11 @@ function Products({ tab, items }) {
                                 gap: 1,
                                 bgcolor: '#F6F3F3'
                             }} onClick={handleView(item)}>
-                                <Box className='boxitems' sx={{ bgcolor: 'white', width: '14rem','&:hover': {
-                                                color: 'blue',
-                                           }, }} >
+                                <Box className='boxitems' sx={{
+                                    bgcolor: 'white', width: '14rem', '&:hover': {
+                                        color: 'blue',
+                                    },
+                                }} >
                                     <Box sx={{
                                         width: '15rem',
                                         height: '10rem',
@@ -108,7 +111,7 @@ function Products({ tab, items }) {
                                         <Typography className='boxZoom' sx={{
                                             fontSize: '1rem',
                                             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                                             
+
                                         }}>
                                             {item.name}
                                         </Typography>

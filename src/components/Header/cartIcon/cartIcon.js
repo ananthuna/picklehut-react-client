@@ -14,24 +14,32 @@ function cartIcon() {
     useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        if(!user) return navigate('/')
+        if (!user) return navigate('/')
         const customConfig = {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
         }
-
+        // console.log('cart-api');
         axios.get(`${baseUrl}/api/cart/cartitems`, customConfig)
             .then((res) => {
                 setItems(res.data.items)
                 setCartitems(res.data)
+                // console.log(cartitems);
             }).catch((err) => {
+                // console.log("error:" + err.response.statusText);
                 if (err.response.statusText === 'Unauthorized') {
-                    navigate('/')
+                    navigate('/login')
                 }
             })
 
+    }, [])
+
+    useEffect(() => {
+        setItems(cartitems.items)
+        // console.log('items'+cartitems);
     }, [cartitems])
+
 
 
     return (

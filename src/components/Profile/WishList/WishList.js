@@ -81,7 +81,7 @@ function WishList() {
                         display: 'flex',
                         justifyContent: 'space-between',
                         ml: '-2rem'
-                    }} >
+                    }} key={product._id}>
                         <Box sx={{
                             mt: '1rem',
                             mb: '1rem',

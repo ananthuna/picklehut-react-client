@@ -15,7 +15,7 @@ function List({ items }) {
             }}
             >
                 {items && items.map((item, index) =>
-                    <Box key={index}>
+                    <Box key={item._id}>
                         <Box sx={{
                             position: 'relative',
                             display: 'flex',

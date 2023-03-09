@@ -5,6 +5,7 @@ import './Address.css'
 import Changebtn from './ChangeAddress/ChangeAddressbtn'
 
 function Address({ address, name, number }) {
+   
 
     return (
         <Paper sx={{
@@ -22,18 +23,19 @@ function Address({ address, name, number }) {
                 pt: '1rem'
 
             }}
-                key={address._id}>
+            >
                 <Box>
                     <Box sx={{
                         display: 'flex',
                         gap: 3
                     }}>
                         <Typography><b>Delivery to:</b></Typography>
-                        <Typography>{name}</Typography>
-                        <Typography>{number}</Typography>
+                        {name && <Typography>{name}</Typography>}
+                        {number && <Typography>{number}</Typography>}
                     </Box>
                     <Box>
-                        <Typography>{address.address + ',' + address.city + ' '}<b>{'pin:' + address.pin}</b></Typography>
+                        {!address && <Typography>Need to add delivery address</Typography>}
+                        {address && <Typography>{address.address+ ',' + address.city + ' '}<b>{'pin:' + address.pin}</b></Typography>}
                     </Box>
                 </Box>
 

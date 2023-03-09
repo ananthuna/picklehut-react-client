@@ -63,12 +63,12 @@ export default function SignUp() {
 
         console.log(response.data);
         
-        // if (response.data === "already used email") {
-        //   setEmail(true)
-        // } else {
-        //   localStorage.setItem("user", JSON.stringify(response.data));
-        //   navigate('/')
-        // }
+        if (response.data === "already used email") {
+          setEmail(true)
+        } else {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          navigate('/')
+        }
 
       })
   };

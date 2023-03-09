@@ -9,7 +9,7 @@ import Order from './pages/Order'
 import Account from './pages/Account';
 import Admin from './pages/Admin'
 
-import { HashRouter,BrowserRouter, Routes, Route } from 'react-router-dom'
+import {BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (

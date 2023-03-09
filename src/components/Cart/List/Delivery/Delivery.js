@@ -39,9 +39,9 @@ function Delivery({ item }) {
         }
         axios.post(`${baseUrl}/api/wishlist/list`, Data, customConfig)
             .then((res) => {
-                console.log(res.data.items);
+                // console.log(res.data.items);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     }
     return (

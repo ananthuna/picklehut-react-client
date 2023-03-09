@@ -18,7 +18,7 @@ export default function PrimarySearchAppBar() {
     React.useEffect(() => {
         let User = localStorage.getItem("user");
         setUser(JSON.parse(User))
-        console.log(JSON.parse(User));
+
     }, [])
 
 
@@ -46,13 +46,16 @@ export default function PrimarySearchAppBar() {
                                 </IconButton>
                             </Box>
                         ) : (
-                            <Box>
-                                <IconButton>
-                                    <Cart />
-                                </IconButton>
-                                <IconButton>
-                                    <Account />
-                                </IconButton>
+                            <Box sx={{
+                                display: 'flex',
+                                gap:'10px'
+                            }}>
+                                {/* <IconButton> */}
+                                <Cart />
+                                {/* </IconButton> */}
+                                {/* <IconButton> */}
+                                <Account />
+                                {/* </IconButton> */}
                             </Box>
                         )}
                     </Box>

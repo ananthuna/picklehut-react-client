@@ -4,7 +4,6 @@ import React, { useContext, useEffect } from 'react'
 import List from './List/List'
 import Address from './Address/Address'
 import TotalPrice from './TotalPrice/TotalPrice'
-// import PlaceOrder from './PlaceOrder/PlaceOrder'
 import axios from 'axios'
 import { baseUrl } from '../../url'
 import { UserContext } from '../../Context/Context'
@@ -17,6 +16,7 @@ function CartItems() {
     const [name, setName] = React.useState('')
     const [number, setNumber] = React.useState('')
     const navigate = useNavigate()
+    // const { setValue } = useContext(UserContext)
 
     useEffect(() => {
         let user = localStorage.getItem("user")
@@ -37,16 +37,26 @@ function CartItems() {
 
         axios.get(`${baseUrl}/api/user/address`, customConfig)
             .then((res) => {
-
-                setAddress(res.data.address.pop())
+                setAddress(res.data.address[0])
                 setName(res.data.firstName)
                 setNumber(res.data.number)
-                console.log(res.data)
             })
 
     }, [])
 
+
     const handlePlaceOrder = () => {
+        if (!address) return alert('delivery address is empty')
+        // if (!number) {
+        //     alert('Need contact number added.')
+        //     setValue(0)
+        //     navigate('/account')
+        //     return
+        // }
+        if (cartitems==='empty cart'){
+            alert('cart is empty.continue purchase?')
+            return navigate('/')
+        }
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
         const customConfig = {
@@ -82,9 +92,9 @@ function CartItems() {
                 mt: '5.6rem',
                 width: '60%'
             }}>
-                {address && name && number && <Address address={address} name={name} number={number} />}
+                <Address address={address} name={name} number={number} />
 
-                {cart && <List items={cartitems.items} />}
+                <List items={cartitems.items} />
 
                 <Box>
                     <Paper sx={{
