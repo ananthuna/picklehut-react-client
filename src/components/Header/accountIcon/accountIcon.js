@@ -61,7 +61,7 @@ function accountIcon() {
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const { user } = React.useContext(UserContext)
+    const { user, setUser } = React.useContext(UserContext)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -72,7 +72,8 @@ function accountIcon() {
     const handleLogout = () => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        console.log(baseUrl);
+        if (!user) return navigate('/')
+        // console.log(baseUrl);
         const Data = ''
         const customConfig = {
             headers: {
@@ -82,9 +83,10 @@ function accountIcon() {
 
         axios.post(`${baseUrl}/api/user/logout`, Data, customConfig)
             .then((res) => {
+                setUser('')
                 localStorage.removeItem("user");
                 handleClose()
-                navigate('/')
+                window.location.reload()
             })
 
     }

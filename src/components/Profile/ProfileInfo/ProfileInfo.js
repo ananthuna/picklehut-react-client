@@ -6,12 +6,16 @@ import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import axios from 'axios';
 import { baseUrl } from '../../../url'
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../Context/Context';
 
 export default function StateTextFields() {
     const [fname, setfName] = React.useState('First Name');
     const [lname, setlName] = React.useState('Last Name');
-    const [email, setEmail] = React.useState('ananthuna6@gmail')
-    const [number, setNumber] = React.useState('+917012031852')
+    const [email, setEmail] = React.useState('Email')
+    const [number, setNumber] = React.useState('')
+    const { setUser } = React.useContext(UserContext)
+    const navigate = useNavigate()
     React.useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user) || ''
@@ -25,12 +29,12 @@ export default function StateTextFields() {
                 setfName(res.data.firstName)
                 setlName(res.data.lastName)
                 setEmail(res.data.email)
-                setNumber(res.data.number)
-                console.log(res.data.number);
+                if (res.data.number) setNumber(res.data.number)
+                // console.log(res.data.number);
             }).catch((err) => {
-                // if (err.response.statusText === 'Unauthorized') {
-                //     navigate('/login')
-                // }
+                if (err.response.statusText === 'Unauthorized') {
+                    navigate('/login')
+                }
             })
 
     }, [])
@@ -49,14 +53,37 @@ export default function StateTextFields() {
             email: email,
             number: number
         }
-        axios.post(`${baseUrl}/api/user/updateProfile`, Data, customConfig)
-            .then((res) => {
-                console.log(res.data);
-            }).catch((err) => {
-                // if (err.response.statusText === 'Unauthorized') {
-                //     navigate('/login')
-                // }
-            })
+        if (window.confirm('Save the changes?')) {
+            axios.post(`${baseUrl}/api/user/updateProfile`, Data, customConfig)
+                .then((res) => {
+                    // console.log(res.data);
+                    let User = JSON.parse(localStorage.getItem("user"))
+                    let token = User.token
+                    let user = { ...res.data, token }
+                    setUser(user)
+                    localStorage.setItem("user", JSON.stringify(user));
+
+
+                }).catch((err) => {
+                    // if (err.response.statusText === 'Unauthorized') {
+                    //     navigate('/login')
+                    // }
+                })
+        } else {
+            axios.get(`${baseUrl}/api/user/profileinfo`, customConfig)
+                .then((res) => {
+                    setfName(res.data.firstName)
+                    setlName(res.data.lastName)
+                    setEmail(res.data.email)
+                    if (res.data.number) setNumber(res.data.number)
+                    // console.log(res.data.number);
+                }).catch((err) => {
+                    if (err.response.statusText === 'Unauthorized') {
+                        navigate('/login')
+                    }
+                })
+        }
+
     }
 
 

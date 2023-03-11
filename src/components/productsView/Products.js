@@ -29,7 +29,7 @@ function Products({ tab, items }) {
             .then((res) => {
                 setWishlist(res.data.items)
             }).catch((err) => {
-                navigate('/login')
+                navigate('/')
             })
     }, [])
 
@@ -56,7 +56,7 @@ function Products({ tab, items }) {
                 // console.log(res.data.items);
             }).catch((err) => {
                 // console.log(err);
-                navigate('/login')
+                navigate('/')
             })
     }
 

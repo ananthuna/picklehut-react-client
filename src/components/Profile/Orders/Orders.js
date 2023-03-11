@@ -19,7 +19,7 @@ function Orders() {
         axios.get(`${baseUrl}/api/order/orders`, customConfig)
             .then((res) => {
                 // console.log("orders:"+res.data);
-                console.log(res.data);
+                // console.log(res.data);
                 setItems(res.data)
             })
     }, [])

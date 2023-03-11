@@ -6,7 +6,7 @@ import ProductDetails from './ProductDetails/ProductDetails';
 import Delivery from './Delivery/Delivery';
 import { baseUrl } from '../../../url'
 
-function List({ items }) {
+function List({ items, summary }) {
 
     return (
         <>
@@ -19,24 +19,24 @@ function List({ items }) {
                         <Box sx={{
                             position: 'relative',
                             display: 'flex',
-                            justifyContent:'space-between'
+                            justifyContent: 'space-between'
                         }}>
                             <Box sx={{
                                 mt: '1rem',
                                 mb: '0.5rem',
-                                ml:'1rem'
+                                ml: '1rem'
                             }}>
                                 <img src={baseUrl + '/' + item.url} alt='img' width={150} height={100}></img>
-                                <Quantity item={item}/>
+                                {!summary && <Quantity item={item} />}
                             </Box>
                             <Box>
-                                <ProductDetails item={item}/>
+                                <ProductDetails item={item} />
                             </Box>
                             <Box sx={{
                                 ml: '7rem',
                                 mt: '2rem'
                             }}>
-                                <Delivery item={item}/>
+                                <Delivery item={item} summary={summary}/>
                             </Box>
 
                         </Box>

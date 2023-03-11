@@ -24,11 +24,14 @@ function Quantity({ item }) {
         const data = {
             quantity: numb
         }
-
+        console.log('patch start');
         axios.patch(`${baseUrl}/api/cart/cartitems/${item.itemId}`, data, customConfig)
             .then((res) => {
                 setCartitems(res.data)
-                // console.log(res.data);
+                console.log('patch-end');
+                console.log(res.data);
+            }).catch((err) => {
+                console.log(err);
             })
     }, [quant])
     return (

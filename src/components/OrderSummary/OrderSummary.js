@@ -19,22 +19,15 @@ import { UserContext } from '../../Context/Context';
 const steps = [
     {
         label: 'LOGIN',
-        description: `Ananthu N A`,
     },
     {
         label: 'DELIVERY ADDRESS',
-        description: ['Vishnupresadham,mampuzhakary,ramankary p o,alappuzha,kerala', 'Vishnupresadham,mampuzhakary,ramankary p o,alappuzha,kerala'],
     },
     {
         label: 'ORDER SUMMARY',
-        description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`,
     },
     {
         label: 'BILL DETAILS',
-        description: 'total'
     },
     {
         label: 'PAYMENT OPTIONS',
@@ -54,13 +47,13 @@ export default function VerticalLinearStepper() {
     const [address, setAddress] = useState({})
     const [bill, setBill] = useState()
     const [items, setItems] = useState()
-    const [orderId, setOrderId] = useState('')
+    const [orderID, setOrderID] = useState('')
     const navigate = useNavigate()
+    const { setValue } = React.useContext(UserContext)
 
     useEffect(() => {
         let user = localStorage.getItem("user")
         user = JSON.parse(user)
-        console.log(user);
         setUser(user.firstName)
         setNumber(user.number)
         const customConfig = {
@@ -71,8 +64,9 @@ export default function VerticalLinearStepper() {
 
         axios.get(`${baseUrl}/api/order/placeOrder`, customConfig)
             .then((res) => {
-                console.log(res.data);
-                setOrderId(res.data.orderId)
+                // console.log('placeorder');
+                // console.log(res.data);
+                setOrderID(res.data.orderId)
                 setAddress(res.data.address)
                 setBill(res.data.bill)
                 setItems(res.data.items)
@@ -121,7 +115,7 @@ export default function VerticalLinearStepper() {
 
 
     const handleOrder = async () => {
-        console.log(method);
+        // console.log(method);
         const res = await loadScript(
             "https://checkout.razorpay.com/v1/checkout.js"
         );
@@ -140,15 +134,22 @@ export default function VerticalLinearStepper() {
         }
         const Data = {
             payment: method,
-            orderId: orderId
+            orderId: orderID
         }
 
         axios.post(`${baseUrl}/api/order/checkout`, Data, customConfig)
             .then((res) => {
-                console.log(res.data);
-                if (res.data.order === 'placed') return alert(res.data.order) &&  navigate('/order')
+                // console.log('checkout');
+                // console.log(res.data.order);
+                if (res.data.order === 'placed') {
+                    alert('Order placed?')
+                    navigate('/account')
+                    setValue(2)
+                    return
+                }
                 const amount = res.data.order.amount
                 const orderId = res.data.order.id
+                // console.log(orderId);
                 const currency = res.data.order.currency
                 var options = {
                     "key": "rzp_test_urWhsnXVh5JJ6f", // Enter the Key ID generated from the Dashboard
@@ -160,18 +161,23 @@ export default function VerticalLinearStepper() {
                     "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                     "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
                     "handler": function (res) {
-                        alert(res.razorpay_payment_id)
-                        alert(res.razorpay_order_id)
-                        alert(res.razorpay_signature)
+                        // alert(res.razorpay_payment_id)
+                        // alert(res.razorpay_order_id)
+                        // alert(res.razorpay_signature)
                         const Data = {
-                            res
+                            res,
+                            orderId: orderID
                         }
 
+                        // console.log(res);
                         axios.post(`${baseUrl}/api/order/verify-payment`, Data, customConfig)
                             .then((res) => {
-
+                                // console.log(res.data);
+                                alert(res.data.msg)
+                                setValue(2)
+                                navigate('/account')
                             })
-                        navigate('/order')
+
 
                     },
                     "prefill": {
@@ -215,7 +221,7 @@ export default function VerticalLinearStepper() {
                         <StepContent>
                             {step.label === "LOGIN" && <Typography>{user}</Typography>}
                             {step.label === "DELIVERY ADDRESS" && <Address name={user} number={number} address={address} />}
-                            {step.label === "ORDER SUMMARY" ? <List items={items} /> : ''}
+                            {step.label === "ORDER SUMMARY" ? <List items={items} summary={true} /> : ''}
                             {step.label === "BILL DETAILS" && <Billdetails bill={bill - 40} items={items} />}
                             {step.label === 'PAYMENT OPTIONS' && <PaymentOptions />}
                             <Box sx={{ mb: 2 }}>

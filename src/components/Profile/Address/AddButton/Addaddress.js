@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { baseUrl } from '../../../../url';
+import { UserContext } from '../../../../Context/Context';
 
 
 const Transition = React.forwardRef(function Transition(
@@ -28,6 +29,7 @@ const Transition = React.forwardRef(function Transition(
 export default function FullScreenDialog() {
     const [open, setOpen] = React.useState(false);
     const { register, handleSubmit, reset } = useForm({ mode: "onBlur" }); //removed ', formState: { errors } '
+    const { setAddress } = React.useContext(UserContext)
 
     const handleUpload = (data) => {
         let user = localStorage.getItem("user")
@@ -41,8 +43,11 @@ export default function FullScreenDialog() {
         }
         axios.post(`${baseUrl}/api/user/address`, Data, customConfig)
             .then((res) => {
-                alert('Addess added')
+                // console.log('aadress');
+                // console.log(res.data);
+                setAddress(res.data)
                 reset()
+                setOpen(false)
             })
     }
 

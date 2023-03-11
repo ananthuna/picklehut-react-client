@@ -28,7 +28,7 @@ function WishList() {
         axios.get(`${baseUrl}/api/wishlist/wishlistitems`, customConfig)
             .then((res) => {
                 setProducts(res.data)
-                console.log(res.data)
+                // console.log(res.data)
             }).catch((err) => {
                 console.log(err);
             })

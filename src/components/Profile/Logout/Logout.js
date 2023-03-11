@@ -22,7 +22,7 @@ function Logout() {
         axios.post(`${baseUrl}/api/user/logout`, Data, customConfig)
             .then((res) => {
                 localStorage.removeItem("user");
-                navigate('/login')
+                navigate('/')
             })
     }
 
@@ -37,9 +37,9 @@ function Logout() {
 
         axios.post(`${baseUrl}/api/user/logoutAll`, Data, customConfig)
             .then((res) => {
-                console.log('logout');
+                // console.log('logout');
                 localStorage.removeItem("user");
-                navigate('/login')
+                navigate('/')
             }).catch(err => {
                 console.log(err);
             })

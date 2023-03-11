@@ -6,7 +6,7 @@ import axios from 'axios';
 import { baseUrl } from '../../../../url'
 import { UserContext } from '../../../../Context/Context';
 
-function Delivery({ item }) {
+function Delivery({ item, summary }) {
 
     const { setCartitems } = useContext(UserContext)
 
@@ -49,17 +49,18 @@ function Delivery({ item }) {
             <Box sx={{
                 display: 'flex',
                 right: '1rem',
+                pr:'1rem'
             }}>
                 <Typography>Delivery by Mon Dec 5 |</Typography>
                 <Typography sx={{ color: 'green' }}>Free</Typography>
             </Box>
-            <Box sx={{
+            {!summary && <Box sx={{
                 display: 'flex',
                 mt: '3rem',
             }}>
                 <Button variant="text" onClick={() => handleWishlist(item.itemId)}>Add to wishlist</Button>
                 <Button variant="text" onClick={handleRemove}>REMOVE</Button>
-            </Box>
+            </Box>}
         </Box>
     )
 }

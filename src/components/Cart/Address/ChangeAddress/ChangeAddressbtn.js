@@ -14,7 +14,7 @@ export default function App() {
     const [addresss, setAddresss] = React.useState([])
     const [name, setName] = React.useState('')
     const [number, setNumber] = React.useState('')
-    const { setAddress } = React.useContext(UserContext)
+    const { address,setAddress } = React.useContext(UserContext)
 
 
     React.useEffect(() => {
@@ -33,7 +33,7 @@ export default function App() {
                 setNumber(res.data.number)
                 // console.log(res.data)
             })
-    }, [])
+    }, [address])
 
     const handleaddress = (address) => () => {
         setAddress(address)
@@ -81,7 +81,7 @@ export default function App() {
 
 
                 }}>
-                    <AddButton />
+                    <AddButton setAddress={setAddress} />
                 </Box>
                 <Box sx={{
                     height: 300,

@@ -17,7 +17,7 @@ function ProductDetails({ item }) {
                 }}>
                     <Typography sx={{ fontSize: '1.5rem' }} ><b>{'₹' + item.price}</b></Typography>
                 </Box>
-                <Typography>{item.weight}g</Typography>
+                <Typography>Qty: {item.quantity}</Typography>
             </Box>
         </Box>
     )

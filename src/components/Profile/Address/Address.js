@@ -26,7 +26,7 @@ function Address() {
                 setAddress(res.data.address)
                 setName(res.data.firstName)
                 setNumber(res.data.number)
-                console.log(res.data)
+                // console.log(res.data)
             })
     }, [])
     const handleDelete = (id) => {

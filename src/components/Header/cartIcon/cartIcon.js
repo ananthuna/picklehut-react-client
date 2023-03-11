@@ -29,7 +29,8 @@ function cartIcon() {
             }).catch((err) => {
                 // console.log("error:" + err.response.statusText);
                 if (err.response.statusText === 'Unauthorized') {
-                    navigate('/login')
+                    localStorage.clear()
+                    navigate('/')
                 }
             })
 
